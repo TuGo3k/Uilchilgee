@@ -3,24 +3,24 @@ const headerdata = [
     title: "Үйлчилгээ",
     items: [
       {
-        title: "",
+        title: "dsadas",
         link: "/service",
       },
-      {
-        title: "",
-        link: "/report2",
-      },
+      // {
+      //   title: "",
+      //   link: "/report2",
+      // },
     ],
   },
   {
     title: "Байгууллага",
     items: [
       {
-        title: "",
+        title: "байгууллага1",
         link: "/organization",
       },
       {
-        title: "",
+        title: "байгууллага2",
         link: "/report2",
       },
     ],
@@ -29,11 +29,11 @@ const headerdata = [
     title: "Ажлын зар",
     items: [
       {
-        title: "",
+        title: "Ажлын зар1",
         link: "/joblist",
       },
       {
-        title: "",
+        title: "Ажлын зар2",
         link: "/report2",
       },
     ],
@@ -42,26 +42,26 @@ const headerdata = [
     title: "Бэлгийн карт",
     items: [
       {
-        title: "",
+        title: "Бэлгийн карт1",
         link: "/gift",
       },
-      {
-        title: "",
-        link: "/report2",
-      },
+      // {
+      //   title: "Бэлгийн карт2",
+      //   link: "/report2",
+      // },
     ],
   },
   {
     title: "Дуудлагын",
     items: [
       {
-        title: "",
+        title: "Дуудлагын1",
         link: "/duudlaga",
       },
-      {
-        title: "",
-        link: "/report2",
-      },
+      // {
+      //   title: "Дуудлагын",
+      //   link: "/report2",
+      // },
     ],
   },
 ];
