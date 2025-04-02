@@ -5,22 +5,26 @@ import { GoDotFill } from "react-icons/go";
 
 const VipAds = () => {
   return (
-    <div className="grid grid-cols-3 gap-7 w-full h-fit pb-[109px]">
+    <div className="grid lg:grid-cols-3 grid-cols-2  gap-x-7 md:gap-y-[109px] gap-y-[50px] w-full h-fit pb-[109px]">
       {vipdata.map((data, index) => (
-        <div className="gap-8 flex flex-col" key={index}>
+        <div
+          className="md:gap-8 gap-3 flex flex-col ads_card group cursor-pointer"
+          key={index}
+        >
           {/* Container for the image with a fixed height */}
-          <div className="relative w-full h-48 rounded-[20px] overflow-hidden">
+          <div className="relative w-full md:h-[200px] lg:h-[275px] h-[150px] rounded-[20px] overflow-hidden">
             <Image
               src={data.image}
               fill
               alt="image"
+              className="group-hover:scale-110 transition-all duration-300"
               style={{ objectFit: "cover" }}
             />
           </div>
 
           {/* Your text content below the image */}
-          <div>
-            <div className="flex items-center gap-2.5">
+          <div className="w-full h-fit flex flex-col gap-2 md:gap-5">
+            <div className="flex items-center gap-1 text-[10px] md:text-[16px] md:gap-2.5">
               <Image
                 src={data.profile}
                 alt="avatar"
@@ -32,7 +36,9 @@ const VipAds = () => {
               <GoDotFill />
               <p>{data.date}</p>
             </div>
-            <p>Lorem Ipsum Is a Dummy Text Used As The Heading Of a Blog</p>
+            <p className="md:!text-[20px] text-[12px]">
+              Lorem Ipsum Is a Dummy Text Used As The Heading Of a Blog
+            </p>
           </div>
         </div>
       ))}

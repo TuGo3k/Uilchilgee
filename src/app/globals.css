@@ -5,8 +5,17 @@
   --foreground: #171717;
 }
 
-* {
+/* * {
   background-color: #ffffff;
+} */
+@utility vip_header {
+  @apply font-bold text-4xl text-[#3d3d3d];
+}
+@utility vip_description {
+  @apply font-normal text-[16px] text-[#666666];
+}
+@utility ads_card {
+  @apply font-normal text-[16px] text-[#404040];
 }
 
 @theme inline {
@@ -26,4 +35,7 @@
 body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+button {
+  cursor: pointer;
 }
