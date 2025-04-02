@@ -1,4 +1,4 @@
-import vipdata from "@/app/data/vipdata";
+import vipdata from "@/data/vipdata";
 import Image from "next/image";
 import React from "react";
 import { GoDotFill } from "react-icons/go";
