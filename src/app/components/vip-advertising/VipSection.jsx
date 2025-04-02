@@ -2,7 +2,7 @@ import React from "react";
 
 const VipSection = ({ children }) => {
   return (
-    <section className="w-full h-fit px-[10vw] flex flex-col">
+    <section className="w-full h-fit flex flex-col bg-white">
       {children}
     </section>
   );

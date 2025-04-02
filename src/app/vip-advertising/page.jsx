@@ -1,8 +1,9 @@
 import React from "react";
-import VipDetails from "../components/(vip-advertising)/VipDetail";
-import MainVipAds from "../components/(vip-advertising)/MainVipAds";
-import ProductIntro from "../components/(vip-advertising)/ProductIntro";
-import VipSection from "../components/(vip-advertising)/VipSection";
+import VipDetails from "../components/vip-advertising/VipDetail";
+import MainVipAds from "../components/vip-advertising/MainVipAds";
+import ProductIntro from "../components/vip-advertising/ProductIntro";
+import VipSection from "../components/vip-advertising/VipSection";
+import CommonQuestions from "../components/vip-advertising/CommonQuestions";
 
 const page = () => {
   return (
@@ -10,6 +11,7 @@ const page = () => {
       <VipDetails />
       <MainVipAds />
       <ProductIntro />
+      <CommonQuestions />
     </VipSection>
   );
 };
