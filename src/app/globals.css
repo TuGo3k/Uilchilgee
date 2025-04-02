@@ -5,10 +5,6 @@
   --foreground: #171717;
 }
 
-<<<<<<< HEAD
-* {
-  /* background-color: #ffffff; */
-=======
 /* * {
   background-color: #ffffff;
 } */
@@ -20,7 +16,6 @@
 }
 @utility ads_card {
   @apply font-normal text-[16px] text-[#404040];
->>>>>>> c421940bf863c386846d52a809d7cf002b6b5c50
 }
 
 @theme inline {
