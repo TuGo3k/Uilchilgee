@@ -1,13 +1,16 @@
 import React from "react";
 import VipDetails from "../components/(vip-advertising)/VipDetail";
 import MainVipAds from "../components/(vip-advertising)/MainVipAds";
+import ProductIntro from "../components/(vip-advertising)/ProductIntro";
+import VipSection from "../components/(vip-advertising)/VipSection";
 
 const page = () => {
   return (
-    <section>
+    <VipSection>
       <VipDetails />
       <MainVipAds />
-    </section>
+      <ProductIntro />
+    </VipSection>
   );
 };
 

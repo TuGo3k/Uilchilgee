@@ -2,7 +2,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import VipAds from "./VipAds";
 const MainVipAds = () => {
   return (
-    <section className="w-full h-fit flex flex-col px-[10vw] gap-[60px]">
+    <section className="w-full h-fit flex flex-col gap-[60px]">
       <div className="flex justify-between items-center">
         <div className="max-w-[90vw] h-fit flex flex-col gap-5">
           <h1 className="font-bold text-4xl">VIP зар</h1>
