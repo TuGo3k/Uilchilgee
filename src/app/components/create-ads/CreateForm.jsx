@@ -26,7 +26,7 @@ const CreateForm = () => {
             <p className="vip_description !text-[#3D3D3D]">{data}</p>
             <input
               type="text"
-              className="border border-[#DEDFE1] rounded-[10px] w-full "
+              className="border border-[#DEDFE1] rounded-[10px] w-full h-[43px] p-2"
             />
           </div>
         ))}
