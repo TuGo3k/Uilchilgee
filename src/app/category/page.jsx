@@ -4,10 +4,10 @@ import { Navbar } from "../components/Navbar";
 import { Content } from "../components/Content";
 export default function CategoryPage() {
   return (
-    <div className="w-full h-screen bg-white">
+    <div className="w-full h-full bg-white">
       <Header />
 
-      <div className=" px-[8%] w-full  h-full border-amber-400 border-2 flex flex-1 ">
+      <div className=" px-[8%] w-full  h-full   flex flex-1 ">
         <div className="navbar w-1/4 flex h-full ">
           <Navbar />
         </div>

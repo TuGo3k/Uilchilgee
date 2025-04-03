@@ -7,7 +7,7 @@ export const Content = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <div>
+    <div className="flex flex-col gap-10 justify-between">
       <h1 className="text-5xl  ">Үйлчилгээ</h1>
       <div className="relative w-full">
         <input
@@ -23,8 +23,14 @@ export const Content = () => {
       {data.map((el, index)=> 
         <ProductCard key={index} product={el}/>
         )}
-      </div>
 
+      </div>
+        <div className="w-full flex flex-col items-center gap-5 py-15">
+        <h3>
+          Showing 1-12 of 24 items(s)
+        </h3>
+          <button className="text-lg text-white bg-black px-4 py-2 rounded-full"> Load More </button>
+        </div>
     </div>
   );
 };

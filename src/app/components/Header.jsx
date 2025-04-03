@@ -24,7 +24,7 @@ export default function Header() {
   // };
 
   return (
-    <div className="w-full  py-10 flex justify-between border-2 px-[10%]">
+    <div className="w-full  py-10 flex justify-between px-[10%] border-slate-300 border">
       <Link href="/" className="text-blue-600 text-5xl">
         Uilchilgee.mn
       </Link>
@@ -49,7 +49,7 @@ export default function Header() {
               <div className=" absolute top-full left-0  shadow-md p-2 w-auto">
                 {el.items.map((item, i) => (
                   <Link key={i} href={item.link}>
-                    <button className="block text-nowrap w-full text-left p-2 hover:bg-gray-200">
+                    <button className="block text-nowrap w-full min-w-30 text-left p-2 hover:bg-gray-200 bg-white">
                       {item.title || "Untitled"}{" "}
                       {/* Ensure empty titles don’t break */}
                     </button>
