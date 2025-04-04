@@ -1,19 +1,31 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
-import { useState } from "react";
+import RelativeItem from "../components/Category-detail/RelativeItem";
+import DescriptionSection from "../components/Category-detail/DescriptionSection";
+import DetailSection from "../components/Category-detail/DetailSection";
+import Footer from "../components/Footer";
+import PaymentCard from "../components/Category-detail/PaymentCard";
 
-import DescriptionSection from "../components/DescriptionSection";
-import DetailSection from "../components/DetailSection";
-const page = () => {
- 
+const Page = () => {
+  const [payOpen, setPayOpen] = useState(false);
+
   return (
-    <div className="w-full h-full bg-white">
+    <div className="w-full min-h-screen bg-white relative">
       <Header />
-      <DetailSection />
+      <div
+        className={`w-screen h-screen ${
+          payOpen ? "fixed" : "hidden"
+        } top-0 left-0 z-50`}
+      >
+        {/* <PaymentCard setPayOpen={setPayOpen} /> */}
+      </div>
+      <DetailSection setPayOpen={setPayOpen} />
       <DescriptionSection />
+      <RelativeItem />
+      <Footer />
     </div>
   );
 };
 
-export default page;
+export default Page;

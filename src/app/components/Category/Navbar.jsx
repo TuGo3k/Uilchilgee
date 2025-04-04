@@ -14,18 +14,17 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="w-full py- flex flex-col shadow-sm shadow-slate-500 p-6 rounded-lg">
-      <h1 className="text-3xl text-left w-full p-4">Categories</h1>
+    <div className="w-full py-4 flex flex-col shadow-sm shadow-slate-500 p-4 sm:p-6 rounded-lg">
+      <h1 className="text-2xl sm:text-3xl text-left w-full mb-4">Categories</h1>
       {navbarCategories.map((el, index) => (
         <div key={index}>
           <div
             onClick={() => expand(el.title)}
             className="flex justify-between flex-col cursor-pointer p-4 hover:bg-slate-300"
           >
-            <div className="w-full flex justify-between ">
-              {" "}
+            <div className="w-full flex justify-between">
               <Link href="#">{el.title}</Link>
-              <IoIosArrowDown className={``} />
+              <IoIosArrowDown />
             </div>
           </div>
           {selectedMenu === el.title && (
@@ -34,12 +33,11 @@ export const Navbar = () => {
               animate={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.05, color: "#000" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="p-4 text-black cursor-pointer z-30 "
+              className="p-4 text-black cursor-pointer z-30"
             >
-              {" "}
               {el.title}
             </motion.div>
-          )}{" "}
+          )}
         </div>
       ))}
     </div>
