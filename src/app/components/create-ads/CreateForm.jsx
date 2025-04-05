@@ -12,7 +12,7 @@ const personal_data_title = [
 
 const CreateForm = () => {
   return (
-    <form className="w-[100vw] h-fit rounded-[10px] overflow-hidden border border-[#DEDFE1]">
+    <form className="w-full lg:w-[100vw] h-fit rounded-[10px] overflow-hidden border border-[#DEDFE1]">
       <div className="bg-[#A6A6A6] px-[50px] py-[25px] text-white">
         <h1 className="font-semibold text-[20px]">Personal</h1>
       </div>

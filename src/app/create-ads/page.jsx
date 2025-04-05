@@ -1,10 +1,14 @@
 import React from "react";
 import CreateAds from "../components/create-ads/CreateAds";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const page = () => {
   return (
-    <section className="py-[25px] w-full h-fit flex flex-col bg-white">
+    <section className="py-[25px] gap-5 w-full h-fit flex flex-col bg-white">
+      <Header />
       <CreateAds />
+      <Footer />
     </section>
   );
 };

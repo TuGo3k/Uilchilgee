@@ -1,18 +1,14 @@
-import React from "react";
-import VipDetails from "../components/vip-advertising/VipDetail";
-import MainVipAds from "../components/vip-advertising/MainVipAds";
-import ProductIntro from "../components/vip-advertising/ProductIntro";
-import VipSection from "../components/vip-advertising/VipSection";
-import CommonQuestions from "../components/vip-advertising/CommonQuestions";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import VipMainSection from "../components/vip-advertising/VipMainSection";
 
 const page = () => {
   return (
-    <VipSection>
-      <VipDetails />
-      <MainVipAds />
-      <ProductIntro />
-      <CommonQuestions />
-    </VipSection>
+    <section className="w-full h-fit flex flex-col bg-white">
+      <Header />
+      <VipMainSection />
+      <Footer />
+    </section>
   );
 };
 
