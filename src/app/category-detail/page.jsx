@@ -23,6 +23,8 @@ const Page = () => {
       <DetailSection setPayOpen={setPayOpen} />
       <DescriptionSection />
       <RelativeItem />
+
+   
       <Footer />
     </div>
   );

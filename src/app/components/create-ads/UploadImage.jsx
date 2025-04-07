@@ -33,10 +33,10 @@ const MultiImageUpload = () => {
         id="multiImageUpload"
       />
       <div
-        className="h-[40px] w-full bg-[#a6a6a6] text-white flex items-center justify-center cursor-pointer"
+        className="h-10 w-full bg-[#a6a6a6] text-white flex items-center justify-center cursor-pointer"
         onClick={triggerFileInput}
       >
-        Зураг оруулах
+        <h2 className="text-xl">Зураг оруулах</h2>
       </div>
       <div
         className="grid grid-cols-2 sm:grid-cols-3 gap-4 justify-items-center relative h-[500px] p-4 w-full"
