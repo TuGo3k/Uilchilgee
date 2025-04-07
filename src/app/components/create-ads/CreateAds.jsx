@@ -1,11 +1,10 @@
-"use client";
 import React from "react";
 import CreateForm from "./CreateForm";
-import MultiImageUpload from "./example";
+import MultiImageUpload from "./UploadImage";
 
 const CreateAds = () => {
   return (
-    <div className="w-full h-fit gap-[43px] lg:flex-row px-[10vw] gap flex flex-col">
+    <div className="w-full h-fit gap-[43px] lg:flex-row px-[5vw] lg:px-[10vw]  gap flex flex-col">
       <CreateForm />
       <MultiImageUpload />
     </div>

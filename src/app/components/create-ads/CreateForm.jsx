@@ -1,4 +1,3 @@
-import React from "react";
 const personal_data_title = [
   "Зарын Нэр",
   "Үнэ",
@@ -19,11 +18,14 @@ const CreateForm = () => {
       <div className="w-full h-fit grid grid-cols-2 gap-x-[46px] gap-y-[25px] p-[25px]">
         {personal_data_title.map((data, index) => (
           <div
-            className="col-span-2 gap-2.5 flex flex-col"
             key={index}
-            style={{ gridColumn: index < 4 ? "span 1/span 1" : "" }}
+            className={`flex flex-col gap-2.5 ${
+              index < 4 ? "col-span-1" : "col-span-2"
+            }`}
           >
-            <p className="vip_description !text-[#3D3D3D]">{data}</p>
+            <p className="vip_description h-[43px] flex items-center !text-[#3D3D3D]">
+              {data}
+            </p>
             <input
               type="text"
               className="border border-[#DEDFE1] rounded-[10px] w-full h-[43px] p-2"

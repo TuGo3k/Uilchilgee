@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 const page = () => {
   return (
-    <section className="py-[25px] gap-5 w-full h-fit flex flex-col bg-white">
+    <section className="gap-5 w-full h-fit flex flex-col bg-white">
       <Header />
       <CreateAds />
       <Footer />

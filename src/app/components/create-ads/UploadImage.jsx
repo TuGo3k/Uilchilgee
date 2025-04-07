@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
@@ -22,7 +23,7 @@ const MultiImageUpload = () => {
     document.getElementById("multiImageUpload").click();
   };
   return (
-    <div className="w-full h-[500px] text-center rounded-[10px] bg-[#F9F9F9] overflow-hidden border border-[#DEDFE1]">
+    <div className="w-full h-full text-center rounded-[10px] bg-[#F9F9F9] overflow-hidden border border-[#DEDFE1]">
       <input
         type="file"
         accept="image/*"
@@ -32,23 +33,21 @@ const MultiImageUpload = () => {
         id="multiImageUpload"
       />
       <div
-        className="h-[40px] w-full bg-[#a6a6a6] flex items-center justify-center cursor-pointer"
+        className="h-[40px] w-full bg-[#a6a6a6] text-white flex items-center justify-center cursor-pointer"
         onClick={triggerFileInput}
       >
-        Add Images
+        Зураг оруулах
       </div>
-      <div className="grid grid-cols-3 gap-4 justify-items-center relative p-4 w-full h-full ">
+      <div
+        className="grid grid-cols-2 sm:grid-cols-3 gap-4 justify-items-center relative h-[500px] p-4 w-full"
+        style={{ overflowY: images.length > 0 ? "scroll" : "hidden" }}
+      >
         {images.map((image, index) => (
-          <div key={index} className="relative">
+          <div key={index} className="relative w-full h-fit">
             <img
               src={image.preview}
               alt={`Preview ${index}`}
-              style={{
-                width: "200px",
-                height: "150px",
-                objectFit: "cover",
-                borderRadius: "8px",
-              }}
+              className="w-full h-[150px] object-cover rounded-[8px]"
             />
             <button
               onClick={() => handleRemoveImage(image.preview)}
@@ -60,7 +59,10 @@ const MultiImageUpload = () => {
           </div>
         ))}
         {images.length === 0 && (
-          <div className="absolute w-full h-full flex items-center justify-center">
+          <div
+            className="absolute w-full h-full flex items-center cursor-pointer justify-center"
+            onClick={triggerFileInput}
+          >
             <FaCloudUploadAlt size={90} color="#A6A6A6" />
           </div>
         )}
