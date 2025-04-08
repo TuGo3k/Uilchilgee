@@ -2,15 +2,14 @@
 
 import Image from "next/image";
 
-export default function CategoryCards({ name, image, width }) {
+export default function CategoryCards({ name, image }) {
   return (
-    <div className="w-full flex flex-col items-center justify-center  ">
-      <div className={`circle bg-[#f5f5f5] relative   rounded-full  shadow-sm size-full`}>
-      <div className="w-full h-full flex justify-center items-center">
-      <img src={image} className=" object-cover " />
+    <div className="w-auto flex flex-col items-center justify-center">
+      <div className="size-52 rounded-full bg-[#f5f5f5] hover:border hover:border-blue-500 transform-all shadow-sm flex items-center justify-center overflow-hidden p-7">
+        <img src={image} alt={name} className="object-contain w-full h-full" />
       </div>
-      </div>
-      <p>{name}</p>
+      <p className="mt-2 text-center text-xl">{name}</p>
     </div>
   );
 }
+

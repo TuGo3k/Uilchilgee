@@ -5,15 +5,24 @@ import CategoryTitles from "./components/Home/CategoryTitles";
 import VIPSection from "./components/Home/VIPSection";
 import VipAds from "./components/Home/VIPads";
 import CategorySection from "./components/Home/CategorySection";
+import FiveStarSection from "./components/Home/FiveStarSection";
+import TotalServices from "./components/Home/TotalServices";
+import Footer from "./components/Footer";
 export default function Home() {
   return (
-    <MainContainer>
+ <>
+     <MainContainer>
       <MainHeader />
       <CategoryTitles />
       <CustomSwiper />
       <VipAds />
       <VIPSection />
-      <CategorySection />
+      <CategorySection/>
+      <FiveStarSection/>
+      <TotalServices/>
+      {/* <CategorySection /> */}
     </MainContainer>
+      <Footer/>
+ </>
   );
 }

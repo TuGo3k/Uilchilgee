@@ -5,11 +5,10 @@ import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
 import { useState } from "react";
 
-
 const CategoryTitles = () => {
   const [hoveredMenu, setHoveredMenu] = useState("");
   return (
-    <div className="hidden md:flex gap-10 text-black relative items-center">
+    <div className="hidden md:flex gap-10 text-black relative items-center ">
       {headerdata.map((el, index) => (
         <div
           key={index}
