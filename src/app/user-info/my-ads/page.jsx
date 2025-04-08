@@ -1,7 +1,13 @@
-import React from "react";
+import MyAds from "@/app/components/user-info/MyAds";
+import UserSideBar from "@/app/components/user-info/UserSideBar";
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <>
+      <UserSideBar />
+      <MyAds />
+    </>
+  );
 };
 
 export default page;
