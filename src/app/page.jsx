@@ -1,4 +1,3 @@
-import Image from "next/image";
 import MainContainer from "./utils/MainContainer";
 import MainHeader from "./components/Home/MainHeader";
 import CustomSwiper from "./utils/CustomSwiper";
@@ -14,7 +13,7 @@ export default function Home() {
       <CustomSwiper />
       <VipAds />
       <VIPSection />
-      <CategorySection/>
+      <CategorySection />
     </MainContainer>
   );
 }

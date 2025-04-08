@@ -22,7 +22,7 @@ export const Content = () => {
           className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-gray-500 text-white"
         />
       </div>
-      <div className="w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+      <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
         {data.map((el, index) => (
           <ProductCard key={index} product={el} />
         ))}

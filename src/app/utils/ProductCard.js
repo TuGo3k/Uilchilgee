@@ -13,22 +13,20 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Product Details */}
-      <div className="mt-3">
+      <div className="mt-3 w-full h-fit flex flex-col items-start justify-start px-4">
         <h2 className="text-md font-medium text-gray-800">{product.name}</h2>
 
         {/* Pricing */}
-        <div className="flex items-center space-x-2 mt-1">
-          <span className="text-gray-400 line-through text-sm">
-            ${product.original_price.toFixed(2)}
-          </span>
-          <span className="text-black font-semibold text-md">
-            ${product.discounted_price.toFixed(2)}
-          </span>
-        </div>
-
-        {/* Plus Icon */}
-        <div className="flex justify-end mt-2">
-          <FiPlusCircle className="text-gray-500 text-lg cursor-pointer hover:text-black" />
+        <div className="flex w-full h-fit items-center justify-between space-x-2 mt-1">
+          <div className="w-full flex h-fit gap-[1px] sm:gap-1 items-center font-normal">
+            <span className="text-gray-400 line-through text-[11px] sm:text-sm">
+              ${product.original_price.toFixed(2)}
+            </span>
+            <span className="text-black font-semibold text-[11px] sm:text-sm">
+              ${product.discounted_price.toFixed(2)}
+            </span>
+          </div>
+          <FiPlusCircle className="text-gray-500 text-2xl cursor-pointer hover:text-black" />
         </div>
       </div>
     </div>
