@@ -58,9 +58,9 @@ const adDetails = [
 
 const MyAds = () => {
   return (
-    <div className="w-full h-fit max-h-[666px] flex gap-[35px] flex-col p-[32px] sm:p-[64px] rounded-[10px] border border-[#e6ebf1]">
+    <div className="w-full h-fit min-h-[666px] flex gap-[35px] flex-col p-[32px] sm:p-[64px] rounded-[10px] border border-[#e6ebf1]">
       <h1 className="font-semibold text-2xl text-[#1A3353]">Миний зарууд</h1>
-      <div className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-4 overflow-scroll gap-2">
+      <div className="w-full h-[370px] grid grid-cols-2 md:grid-cols-3 p-0 sm:p-4 overflow-y-scroll gap-2">
         {adDetails.map((ad, index) => (
           <div
             key={index}
