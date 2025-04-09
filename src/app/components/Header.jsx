@@ -4,11 +4,25 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FiMenu, FiX } from "react-icons/fi";
 import headerdata from "@/data/headerdata";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoading ,setIsLoading] = useState(false)
+  const [datas , setDatas ] = useState([])
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get('http://localhost:4000/api/v1/category')
+    .then((e) => setDatas(e.data.data))
+    .catch((err) => toast.error('Network Error'))
+    .finally(() => {
+      setIsLoading(false)
+    })
+  })
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
@@ -32,7 +46,7 @@ export default function Header() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-10 text-black relative items-center">
-          {headerdata.map((el, index) => (
+          {datas.map((el, index) => (
             <div
               key={index}
               className="relative px-2"

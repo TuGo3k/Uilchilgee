@@ -5,11 +5,23 @@ import TopCard from "@/app/utils/TopCard";
 import data from "@/data/services";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const VIPSection = () => {
   const [page, setPage] = useState(0);
-  const [cardWidth, setCardWidth] = useState(16); // default for base
+  const [cardWidth, setCardWidth] = useState(16); 
   const [gapPx, setGapPx] = useState(40);
+  const [isLoading , setIsLoading] = useState(false)
+  const [datas , setDatas] = useState([])
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get('http://localhost:4000/api/v1/product?sort=-createdAt&type=special')
+    .then((e) => setDatas(e.data.data))
+    .catch((err) => toast.error('Network error'))
+    .finally(() => {setIsLoading(false)})
+  })
 
   const nextSlide = () => {
     setPage((prev) => (prev + 1) % data.length);
@@ -87,13 +99,12 @@ const VIPSection = () => {
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
           >
-            {data.map((el, index) => (
+            {datas.map((el, index) => (
               <motion.div key={index} className=" w-[28vw] lg:w-[16vw] flex-shrink-0">
                 <TopCard
                   title={el.title}
                   price={el.price}
-                  originalPrice={el.originalPrice}
-                  savings={el.savings}
+                  imageUrl={`http://localhost:4000/uploads/${el.covers[0]}`}
                 />
               </motion.div>
             ))}
