@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Header from ".././components/Header"; // Adjust path if necessary
 import { Navbar } from "../components/Category/Navbar";
@@ -11,21 +11,7 @@ export default function CategoryPage() {
   return (
     <div className="w-full h-full bg-white">
       <Header />
-
-      <div className="px-[5vw] lg:px-[8vw] w-full h-full flex flex-col lg:flex-row">
-         <div className="relative w-full">
-                <input
-                  type="text"
-                  placeholder="Search An Item"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded-full p-4 pl-6 text-lg sm:text-xl border border-gray-300 focus:outline-none"
-                />
-                <FaSearch
-                  size={30}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-gray-500 text-white"
-                />
-              </div>
+      <div className="px-[5vw] lg:px-[8vw] py-8 w-full h-full flex flex-col lg:flex-row">
         <div className="navbar w-full lg:w-1/4 flex h-full mb-6 lg:mb-0">
           <Navbar />
         </div>
