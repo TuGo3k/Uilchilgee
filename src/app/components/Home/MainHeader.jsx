@@ -10,9 +10,11 @@ import { LuShoppingCart } from "react-icons/lu";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
+import AuthModal from "../AuthModal";
 const MainHeader = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="flex flex-col ">
       <div className="w-full flex justify-between">
@@ -100,9 +102,8 @@ const MainHeader = () => {
           />
         </div>
 
-        <div className=" gap-10 lg:flex hidden">
-          <div className="flex gap-2">
-            {" "}
+        <div className=" gap-10 lg:flex hidden  cursor-pointer">
+          <div className="flex gap-2" onClick={() => setIsModalOpen(true)}>
             <LuUser className="text-[#008ECC]" size={25} />
             <h2 className="text-nowrap">Sign Up/Sign In</h2>
           </div>
@@ -113,6 +114,7 @@ const MainHeader = () => {
           </div> */}
         </div>
       </div>
+      <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

@@ -10,19 +10,19 @@ import TotalServices from "./components/Home/TotalServices";
 import Footer from "./components/Footer";
 export default function Home() {
   return (
- <>
-     <MainContainer>
-      <MainHeader />
-      <CategoryTitles />
-      <CustomSwiper />
-      <VipAds />
-      <VIPSection />
-      <CategorySection/>
-      <FiveStarSection/>
-      <TotalServices/>
-      {/* <CategorySection /> */}
-    </MainContainer>
-      <Footer/>
- </>
+    <>
+      <MainContainer>
+        <MainHeader />
+        <CategoryTitles />
+        <CustomSwiper />
+        <VipAds />
+        <VIPSection />
+        <CategorySection />
+        <FiveStarSection />
+        <TotalServices />
+        {/* <CategorySection /> */}
+      </MainContainer>
+      <Footer />
+    </>
   );
 }

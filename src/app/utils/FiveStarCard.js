@@ -14,13 +14,13 @@ export default function FiveStarCard({
     >
       <div className="flex flex-col justify-between gap-2 w-1/2">
         <div
-          className="text-xl font-medium px-4 py-1 rounded-md w-fit"
+          className="text-xl font-medium px-4 py-1 z-19 rounded-md w-fit"
           style={{ backgroundColor: labelColor }}
         >
           {name.toUpperCase()}
         </div>
 
-        <div className="flex justify-start h-20 w-2/3 ">
+        <div className="flex justify-start h-20 z-19 w-2/3 ">
           <img
             src={logo}
             alt={`${name} logo`}
@@ -28,7 +28,7 @@ export default function FiveStarCard({
           />
         </div>
 
-        <div className="text-3xl  font-medium">UP to 80% OFF</div>
+        <div className="text-3xl z-19 font-medium">UP to 80% OFF</div>
       </div>
 
       <div className=" mt-4 h-52 z-20">
