@@ -9,17 +9,18 @@ import { useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 const CategorySection = () => {
   const [page, setPage] = useState(0);
-  const [cardWidth, setCardWidth] = useState(12); // default for base
-  const [gapPx, setGapPx] = useState(20);
-  const nextSlide = () => {
-    setPage((prev) => (prev + 1) % categoriesdata.length);
-  };
+  const [cardWidth, setCardWidth] = useState(10); // default for base
+  const [gapPx, setGapPx] = useState(60);
+  const [itemsPerPage, setItemsPerPage] = useState(1);
+  // const nextSlide = () => {
+  //   setPage((prev) => (prev + 1) % categoriesdata.length);
+  // };
 
-  const prevSlide = () => {
-    setPage(
-      (prev) => (prev - 1 + categoriesdata.length) % categoriesdata.length
-    );
-  };
+  // const prevSlide = () => {
+  //   setPage(
+  //     (prev) => (prev - 1 + categoriesdata.length) % categoriesdata.length
+  //   );
+  // };
 
   const handleDragEnd = (event, info) => {
     const swipe = info.offset.x;
@@ -31,21 +32,48 @@ const CategorySection = () => {
     }
   };
 
-    useEffect(() => {
-      const updateSizes = () => {
-        if (window.innerWidth >= 1024) {
-          // Tailwind 'lg' is 1024px+
-          setCardWidth(12);
-          setGapPx(20);
-        } else {
-          setCardWidth(20);
-          setGapPx(12);
-        }
-      };
-      updateSizes(); // Set initially
-      window.addEventListener("resize", updateSizes);
-      return () => window.removeEventListener("resize", updateSizes);
-    }, []);
+  useEffect(() => {
+    const updateSizes = () => {
+      if (window.innerWidth >= 1024) {
+        // Tailwind 'lg' is 1024px+
+        setCardWidth(12);
+        setGapPx(20);
+      } else {
+        setCardWidth(20);
+        setGapPx(12);
+      }
+    };
+    updateSizes(); // Set initially
+    window.addEventListener("resize", updateSizes);
+    return () => window.removeEventListener("resize", updateSizes);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const vw = window.innerWidth;
+      if (vw >= 1024) {
+        // Desktop: lg:w-[12vw]
+        setItemsPerPage(Math.floor(100 / 12)); // ≈8
+      } else {
+        // Mobile: w-[20vw]
+        setItemsPerPage(Math.floor(100 / 20)); // ≈5
+      }
+    };
+
+    handleResize(); // Run once on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const maxPage = Math.ceil(categoriesdata.length / itemsPerPage) - 1;
+
+  const prevSlide = () => {
+    if (page > 0) setPage((prev) => prev - 1);
+  };
+
+  const nextSlide = () => {
+    if (page < maxPage) setPage((prev) => prev + 1);
+  };
 
   // const CARD_WIDTH = 12; // Must match w-[16vw]
   // const GAP_PX = 20; // Tailwind's gap-10 = 2.5rem = 40px
@@ -68,6 +96,28 @@ const CategorySection = () => {
           <div className="flex gap-4">
             <button
               onClick={prevSlide}
+              disabled={page === 0}
+              className={`bg-white shadow-md rounded-full px-4 hover:bg-gray-100 ${
+                page === 0 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+            >
+              <ChevronLeft size={20} className="text-black z-50" />
+            </button>
+            <button
+              onClick={nextSlide}
+              disabled={page === maxPage}
+              className={`bg-white shadow-md rounded-full px-4 hover:bg-gray-100 ${
+                page === maxPage ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+            >
+              <ChevronRight size={20} className="text-black z-50" />
+            </button>
+          </div>
+        </div>
+        {/* <div className="relative lg:flex gap-10 hidden">
+          <div className="flex gap-4">
+            <button
+              onClick={prevSlide}
               className="  bg-white shadow-md rounded-full px-4 hover:bg-gray-100 "
             >
               <ChevronLeft size={20} className="text-black z-50" />
@@ -79,12 +129,12 @@ const CategorySection = () => {
               <ChevronRight size={20} className="text-black z-50" />
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="relative">
         <div className="overflow-hidden w-full">
           <motion.div
-            className="flex  w-full  justify-between gap-3 lg:gap-5 "
+            className="flex  w-full  justify-between gap-3 lg:gap-15 "
             animate={{
               x: `calc(-${page * cardWidth}vw - ${page * gapPx}px)`,
             }}
@@ -94,7 +144,10 @@ const CategorySection = () => {
             onDragEnd={handleDragEnd}
           >
             {categoriesdata.map((el, index) => (
-              <motion.div key={index} className={`lg:w-[12vw] w-[20vw] flex-shrink-0 `}>
+              <motion.div
+                key={index}
+                className={`lg:w-[10vw] w-[20vw]  flex-shrink-0  `}
+              >
                 <CategoryCards
                   name={el.name}
                   image={el.image}
@@ -104,7 +157,27 @@ const CategorySection = () => {
             ))}
           </motion.div>
         </div>
-            <button
+        <button
+          onClick={prevSlide}
+          disabled={page === 0}
+          className={`absolute top-1/2 -left-5 lg:hidden bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100 ${
+            page === 0 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          <ChevronLeft size={20} className="text-black z-50" />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          disabled={page === maxPage}
+          className={`absolute top-1/2 -right-5 lg:hidden bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100 ${
+            page === maxPage ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          <ChevronRight size={20} className="text-black z-50" />
+        </button>
+
+        {/* <button
                   onClick={prevSlide}
                   className="absolute top-1/2 -left-5 lg:hidden  bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100 "
                 >
@@ -115,7 +188,7 @@ const CategorySection = () => {
                   className="absolute top-1/2 -right-5 lg:hidden bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100"
                 >
                   <ChevronRight size={20} className="text-black z-50" />
-                </button>
+                </button> */}
       </div>
     </div>
   );

@@ -10,13 +10,17 @@ import { LuShoppingCart } from "react-icons/lu";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
+import { FiMenu, FiX } from "react-icons/fi";
+import headerdata from "@/data/headerdata";
+import { IoIosArrowDown } from "react-icons/io";
 import AuthModal from "../AuthModal";
-const MainHeader = () => {
+const MainHeader = ({mobileMenuOpen, setMobileMenuOpen, hoveredMenu, setHoveredMenu}) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  // const [hoveredMenu, setHoveredMenu] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col relative">
       <div className="w-full flex justify-between">
         <h1 className="text-lg text-gray-400">Тавтай морил</h1>{" "}
         <div className="flex gap-2 ">
@@ -49,7 +53,7 @@ const MainHeader = () => {
       <div className="flex items-center justify-between relative py-2">
         <div className="flex items-center gap-2 lg:gap-5">
           {" "}
-          <BiMenuAltLeft className="lg:size-10 size-7 text-[#008ECC]" />
+          <BiMenuAltLeft onClick={() => {setMobileMenuOpen(!mobileMenuOpen),setHoveredMenu("") }} className="lg:size-10 size-7 text-[#008ECC] lg:hidden flex" />
           <Link
             href="/"
             className="text-[#008ECC] text-xl lg:text-4xl font-lg lg:font-md"
