@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const VIPads = () => {
   return (
-    <div className="bg-[#01b4ad] flex flex-col md:flex-row justify-between items-center rounded-md p-6 lg:p-0 md:pl-20 gap-6 md:gap-0">
+    <div className="bg-[#01b4ad] flex flex-col md:flex-row justify-between items-center rounded-md p-6 lg:p-0 md:pl-20 lg:gap-6 md:gap-0">
       <h1 className="text-2xl md:text-3xl text-white font-bold text-center md:text-left">
         VIP үйлчилгээ
       </h1>

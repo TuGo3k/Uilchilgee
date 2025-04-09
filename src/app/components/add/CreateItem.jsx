@@ -52,7 +52,7 @@ export default function CreateItem({ setOpenLocation, open }) {
       });
       toast.success("Амжилттай хадгалагдлаа!");
       console.log(res.data);
-      setContent({ title: "", description: "", price: "", location: "",address: "" , });
+      setContent({ title: "", description: "", price: "", location: "",address: "" ,file:"" });
       setImages([]);
     } catch (err) {
       toast.error("Алдаа гарлаа");
