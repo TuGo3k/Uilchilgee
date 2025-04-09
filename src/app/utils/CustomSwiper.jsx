@@ -66,13 +66,13 @@ const CustomSwiper = ({ darkmode = false }) => {
     <div className="relative">
       <button
         onClick={prevSlide}
-        className="absolute -left-5 lg:-left-10 top-1/2 -translate-y-1/2 z-50 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100 "
+        className="absolute -left-5 lg:-left-10 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100 "
       >
         <ChevronLeft size={25} className="text-black z-50" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute -right-5 lg:-right-10 top-1/2 -translate-y-1/2 z-50 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100"
+        className="absolute -right-5 lg:-right-10 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100"
       >
         <ChevronRight size={25} className="text-black z-50" />
       </button>

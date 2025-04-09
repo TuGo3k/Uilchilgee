@@ -10,11 +10,17 @@ import { LuShoppingCart } from "react-icons/lu";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
-const MainHeader = () => {
+import { FiMenu, FiX } from "react-icons/fi";
+import headerdata from "@/data/headerdata";
+import { IoIosArrowDown } from "react-icons/io";
+const MainHeader = ({mobileMenuOpen, setMobileMenuOpen, hoveredMenu, setHoveredMenu}) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  
+  // const [hoveredMenu, setHoveredMenu] = useState("");
+
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col relative">
       <div className="w-full flex justify-between">
         <h1 className="text-lg text-gray-400">Тавтай морил</h1>{" "}
         <div className="flex gap-2 ">
@@ -47,7 +53,7 @@ const MainHeader = () => {
       <div className="flex items-center justify-between relative py-2">
         <div className="flex items-center gap-2 lg:gap-5">
           {" "}
-          <BiMenuAltLeft className="lg:size-10 size-7 text-[#008ECC]" />
+          <BiMenuAltLeft onClick={() => {setMobileMenuOpen(!mobileMenuOpen),setHoveredMenu("") }} className="lg:size-10 size-7 text-[#008ECC] lg:hidden flex" />
           <Link
             href="/"
             className="text-[#008ECC] text-xl lg:text-4xl font-lg lg:font-md"
@@ -113,6 +119,59 @@ const MainHeader = () => {
           </div> */}
         </div>
       </div>
+        {mobileMenuOpen && (
+          <div
+          className={`fixed left-0 top-0 h-full z-50 flex transform transition-transform duration-300 ease-in-out lg:hidden w-full bg-white ${
+            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="w-2/3 bg-white h-full">
+            <div className="w-full p-4">
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-2xl"
+              >
+                <FiX />
+              </button>
+            </div>
+            <div className="px-[3vw] space-y-4">
+              {headerdata.map((el, index) => (
+                <div key={index}>
+                  <button
+                    className="w-full flex justify-between items-center bg-white px-4 py-2"
+                    onClick={() =>
+                      setHoveredMenu(hoveredMenu === el.title ? "" : el.title)
+                    }
+                  >
+                    <span>{el.title}</span>
+                    <IoIosArrowDown
+                      className={`transition-transform ${
+                        hoveredMenu === el.title ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {hoveredMenu === el.title && el.items.length > 0 && (
+                    <div className="pl-5 space-y-1">
+                      {el.items.map((item, i) => (
+                        <Link key={i} href={item.link}>
+                          <span className="block text-sm text-gray-700 p-2 bg-white hover:bg-gray-100 rounded">
+                            {item.title || "Untitled"}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            onClick={() => setMobileMenuOpen(false)}
+            className="w-1/3 bg-black/70 h-full"
+          ></div>
+        </div>
+        
+            )}
     </div>
   );
 };

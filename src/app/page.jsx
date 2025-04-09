@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react";
 import MainContainer from "./utils/MainContainer";
 import MainHeader from "./components/Home/MainHeader";
 import CustomSwiper from "./utils/CustomSwiper";
@@ -9,11 +11,13 @@ import FiveStarSection from "./components/Home/FiveStarSection";
 import TotalServices from "./components/Home/TotalServices";
 import Footer from "./components/Footer";
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredMenu, setHoveredMenu] = useState("")
   return (
  <>
      <MainContainer>
-      <MainHeader />
-      <CategoryTitles />
+      <MainHeader mobileMenuOpen={mobileMenuOpen}  setMobileMenuOpen={setMobileMenuOpen} hoveredMenu={hoveredMenu}  setHoveredMenu={setHoveredMenu}/>
+      <CategoryTitles  />
       <CustomSwiper />
       <VipAds />
       <VIPSection />

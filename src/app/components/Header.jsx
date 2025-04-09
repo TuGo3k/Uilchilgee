@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header className="w-full border-b border-slate-300">
-      <div className="flex justify-between items-center py-5 lg:py-10 px-[6vw]">
+      <div className="flex lg:flex-row flex-row-reverse justify-between items-center py-5 lg:py-10 px-[6vw]">
         <Link href="/" className="text-blue-600 text-xl lg:text-5xl font-bold">
           Uilchilgee.mn
         </Link>
@@ -23,10 +23,10 @@ export default function Header() {
         {/* Hamburger for Mobile */}
         <div className="md:hidden">
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => {setMobileMenuOpen(!mobileMenuOpen),setHoveredMenu("") }}
             className="text-2xl"
           >
-            {mobileMenuOpen ? <FiX /> : <FiMenu />}
+            <FiMenu />
           </button>
         </div>
 
@@ -68,38 +68,57 @@ export default function Header() {
 
       {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden px-[6vw] pb-4 space-y-4">
-          {headerdata.map((el, index) => (
-            <div key={index}>
-              <button
-                className="w-full flex justify-between items-center bg-gray-100 px-4 py-2 rounded"
-                onClick={() =>
-                  setHoveredMenu(hoveredMenu === el.title ? "" : el.title)
-                }
-              >
-                <span>{el.title}</span>
-                <IoIosArrowDown
-                  className={`transition-transform ${
-                    hoveredMenu === el.title ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {/* Mobile Submenu */}
-              {hoveredMenu === el.title && el.items.length > 0 && (
-                <div className="pl-4 mt-1 space-y-1">
-                  {el.items.map((item, i) => (
-                    <Link key={i} href={item.link}>
-                      <span className="block text-sm text-gray-700 p-2 bg-white hover:bg-gray-100 rounded">
-                        {item.title || "Untitled"}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+    <div
+    className={`fixed left-0 top-0 h-full z-50 flex transform transition-transform duration-300 ease-in-out lg:hidden w-full bg-white ${
+      mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+    }`}
+  >
+    <div className="w-2/3 bg-white h-full">
+      <div className="w-full p-4">
+        <button
+          onClick={() => setMobileMenuOpen(false)}
+          className="text-2xl"
+        >
+          <FiX />
+        </button>
+      </div>
+      <div className="px-[3vw] space-y-4">
+        {headerdata.map((el, index) => (
+          <div key={index}>
+            <button
+              className="w-full flex justify-between items-center bg-white px-4 py-2"
+              onClick={() =>
+                setHoveredMenu(hoveredMenu === el.title ? "" : el.title)
+              }
+            >
+              <span>{el.title}</span>
+              <IoIosArrowDown
+                className={`transition-transform ${
+                  hoveredMenu === el.title ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {hoveredMenu === el.title && el.items.length > 0 && (
+              <div className="pl-5 space-y-1">
+                {el.items.map((item, i) => (
+                  <Link key={i} href={item.link}>
+                    <span className="block text-sm text-gray-700 p-2 bg-white hover:bg-gray-100 rounded">
+                      {item.title || "Untitled"}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+    <div
+      onClick={() => setMobileMenuOpen(false)}
+      className="w-1/3 bg-black/70 h-full"
+    ></div>
+  </div>
+  
       )}
     </header>
   );
