@@ -5,16 +5,16 @@ const TopCard = ({ title, price, originalPrice, savings }) => {
   return (
     <div className="relative w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
       {/* TOP Label */}
-      <div className="absolute top-0 right-0 bg-[#008ecc] text-white text-xs sm:text-sm font-semibold px-4 sm:px-5 py-4 sm:py-6 rounded-bl-xl">
+      <div className="absolute top-0 right-0 bg-[#008ecc] text-white text-xs font-semibold px-2 lg:px-4 py-2 lg:py-4 sm:py-6 rounded-bl-xl">
         TOP
       </div>
 
       {/* Image Placeholder */}
-      <div className="bg-gray-100 h-48 sm:h-64 md:h-72 lg:h-80 w-full"></div>
+      <div className="bg-gray-100 h-36   lg:h-80 w-full"></div>
 
       {/* Content */}
-      <div className="p-3 sm:p-4">
-        <h3 className="text-sm sm:text-md md:text-lg font-medium text-black line-clamp-2">
+      <div className="p-2 lg:p-3">
+        <h3 className="text-md  lg:text-lg font-medium text-black line-clamp-2">
           {title}
         </h3>
 
@@ -22,16 +22,16 @@ const TopCard = ({ title, price, originalPrice, savings }) => {
           <p className="text-black font-semibold text-base sm:text-lg">
             ₹{price}
           </p>
-          <p className="text-gray-500 line-through text-sm sm:text-base">
+          {/* <p className="text-gray-500 line-through text-sm sm:text-base">
             ₹{originalPrice}
-          </p>
+          </p> */}
         </div>
 
-        <hr className="my-2 border-gray-200" />
+        <hr className="my-2 border-gray-200 lg:flex hidden" />
 
-        <p className="text-green-600 font-medium text-sm sm:text-base">
+        {/* <p className="text-green-600 font-medium text-[12px] lg:text-sm">
           Save - ₹{savings}
-        </p>
+        </p> */}
       </div>
     </div>
   );

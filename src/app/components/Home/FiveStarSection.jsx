@@ -7,8 +7,8 @@ import phoneadsdata from "@/data/phoneadsdata";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FiveStarCard from "@/app/utils/FiveStarCard";
 
-const CARD_WIDTH = 28; // vw
-const GAP_PX = 48; // Tailwind gap-12 = 3rem
+// const CARD_WIDTH = 28; // vw
+// const GAP_PX = 48; // Tailwind gap-12 = 3rem
 
 const FiveStarSection = () => {
   const [page, setPage] = useState(0);
@@ -16,6 +16,8 @@ const FiveStarSection = () => {
   const [datas, setDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const intervalRef = useRef(null);
+    const [cardWidth, setCardWidth] = useState(28); // default for base
+    const [gapPx, setGapPx] = useState(48);
 
   // Clone эхний 3 картыг төгсгөлд нэмнэ
   const extendedData = [...phoneadsdata, ...phoneadsdata.slice(0, 3)];
@@ -37,6 +39,22 @@ const FiveStarSection = () => {
     }
   };
 
+ useEffect(() => {
+    const updateSizes = () => {
+      if (window.innerWidth >= 1024) {
+        // Tailwind 'lg' is 1024px+
+        setCardWidth(28);
+        setGapPx(48);
+      } else {
+        setCardWidth(42);
+        setGapPx(16);
+      }
+    };
+    updateSizes(); // Set initially
+    window.addEventListener("resize", updateSizes);
+    return () => window.removeEventListener("resize", updateSizes);
+  }, []);
+
   // useEffect(() => {
   //   intervalRef.current = setInterval(() => {
   //     nextSlide();
@@ -56,14 +74,14 @@ const FiveStarSection = () => {
   // }, [page]);
 
   return (
-    <div className="flex flex-col gap-10 py-[1vw]">
+    <div className="flex flex-col gap-5 lg:gap-10 py-[1vw]">
       {/* Header */}
       <div className="flex justify-between">
-        <h1 className="text-3xl w-[20vw] border-b-2 border-[#008ecc] pb-4">
-          5 одтой <span className="text-3xl text-[#008ecc]">Байгууллага</span>
+      <h1 className="lg:text-3xl text-xl lg:w-[20vw] border-b-2 border-[#008ecc] lg:pb-4">
+          5 одтой <span className="lg:text-3xl text-[#008ecc]">Байгууллага</span>
         </h1>
         <div className="relative flex gap-10">
-          <div className="flex gap-4">
+          <div className="hidden lg:flex gap-4">
             <button
               onClick={prevSlide}
               className="bg-white shadow-md rounded-full px-4 hover:bg-gray-100"
@@ -77,19 +95,20 @@ const FiveStarSection = () => {
               <ChevronRight size={20} className="text-black z-50" />
             </button>
           </div>
-          <p className="flex items-center text-xl gap-2 bg-white rounded-full shadow-md hover:bg-gray-100 pl-4 pr-3 cursor-pointer">
-            view all{" "}
-            <MdKeyboardArrowRight size={20} className="text-[#008ecc]" />
-          </p>
+        <p className="flex items-center lg:text-xl gap-1 lg:gap-2 bg-white rounded-full shadow-md hover:bg-gray-100 pl-2 lg:pl-4 lg:pr-3 cursor-pointer">
+                    view all{" "}
+                    <MdKeyboardArrowRight className="lg:size-5 text-[#008ecc]" />
+                  </p>
         </div>
       </div>
 
       {/* Carousel */}
-      <div className="overflow-hidden w-full">
+     <div className="relative">
+     <div className="overflow-hidden w-full">
         <motion.div
-          className="flex w-full gap-12"
+          className="flex w-full gap-4 lg:gap-12"
           animate={{
-            x: `calc(-${page * CARD_WIDTH}vw - ${page * GAP_PX}px)`,
+            x: `calc(-${page * cardWidth}vw - ${page * gapPx}px)`,
           }}
           transition={
             instant
@@ -101,7 +120,7 @@ const FiveStarSection = () => {
           onDragEnd={handleDragEnd}
         >
           {extendedData.map((el, index) => (
-            <motion.div key={index} className="w-[28vw] flex-shrink-0">
+            <motion.div key={index} className="w-[42vw] lg:w-[28vw] h-35 lg:h-auto flex-shrink-0">
               <FiveStarCard
                 name={el.name}
                 logo={el.logo}
@@ -113,6 +132,22 @@ const FiveStarSection = () => {
           ))}
         </motion.div>
       </div>
+   <button
+                  onClick={prevSlide}
+                  className="absolute top-1/2 -left-5 lg:hidden  bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100 "
+                >
+                  <ChevronLeft size={20} className="text-black z-50" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute top-1/2 -right-5 lg:hidden bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100"
+                >
+                  <ChevronRight size={20} className="text-black z-50" />
+                </button>
+
+
+
+     </div>
 
       {/* Dots */}
       <div className="flex justify-center gap-2">
