@@ -8,9 +8,9 @@ const Footer = () => {
   return (
     <div className="bg-[#008ecc] px-[8vw] overflow-hidden">
       {/* Main Footer */}
-      <div className="w-full min-h-[60vh] flex flex-col lg:flex-row lg:justify-around py-10 gap-10 relative">
+      <div className="w-full min-h-[60vh] flex flex-col lg:flex-row lg:justify-around py-5 lg:py-10 gap-5 lg:gap-10 relative">
         {/* Left Section */}
-        <div className="flex flex-col gap-10 text-white z-20">
+        <div className="flex flex-col gap-5 lg:gap-10 text-white z-20">
           <h1 className="text-2xl lg:text-3xl">Uilchilgee.mn</h1>
 
           <div className="flex flex-col gap-5">
