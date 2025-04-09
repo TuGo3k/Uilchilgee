@@ -6,52 +6,61 @@ import toast from "react-hot-toast";
 import { BiLoaderCircle } from "react-icons/bi";
 
 export default function CreateItem({ setOpenLocation, open }) {
-  const [datas , setDatas] = useState([]);
-  const [isLoading , setIsLoading ] = useState(false);
-  const [images, setImages] = useState([]);
-  const [content , setContent] = useState({
+  const [content, setContent] = useState({
     title: "",
     description: "",
-    type: "",
-    file: "",
     price: "",
     location: "",
-    maptolocation: "",
-    address: ""
-  })
-  
-  const handleUpload = async () => {
-      const e = new FormData()
-      e.append('title' , content.title);
-      e.append('description' , content.description);
-      e.append('type' , content.type || 'normal' );
-      e.append('price' , content.price );
-      e.append('location' , content.location);
-      e.append('maptolocation' , content.maptolocation);
-      e.append('address' , content.address);
+    address: '',
+    type: "",
+    file: ""
+  });
+  const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-      images.forEach((img, index) => {
-        e.append("file", img.file); 
-      })
-      setIsLoading(true)
-      try{
-        const response = await axios.post('http://localhost:4000/api/v1/product' , e,{
-            headers: { 'Content-Type': 'multipart/form-data' }  
-        })
-        setDatas((prevDatas) => [response.data.data , ...prevDatas]);
-        toast.success('Амжилттай');
-        setIsLoading(false);
-      }catch(error){
-        toast.error("Алдаа гарлаа")
-        setIsLoading(false)
-      }finally{
-        setIsLoading(false)
-      }
-  }
   const handleChange = (e) => {
     setContent({ ...content, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async () => {
+    if (images.length === 0) {
+      toast.error("Зураг заавал оруулна уу");
+      return;
+    }
+    for (const image of images) {
+      if (image.file.size > 100 * 1024 * 1024) {  
+        toast.error("Файл 100MB-ээс их хэмжээтэй байна.");
+        return;
+      }
+    }
+
+    const formData = new FormData();
+    formData.append("title", content.title);
+    formData.append("description", content.description);
+    formData.append("price", content.price);
+    formData.append("location", content.location);
+    formData.append("address", content.address);
+    formData.append('type' , content.type || 'normal')
+
+    images.forEach((image) => {
+      formData.append("file", image.file); 
+    });
+    setIsLoading(true);
+    try {
+      const res = await axios.post("http://localhost:4000/api/v1/product", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      toast.success("Амжилттай хадгалагдлаа!");
+      console.log(res.data);
+      setContent({ title: "", description: "", price: "", location: "",address: "" , });
+      setImages([]);
+    } catch (err) {
+      toast.error("Алдаа гарлаа");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="flex flex-col md:flex-row gap-6 pt-4 pb-10 bg-gray-50 h-full px-[8vw] relative">
       {/* Left Section */}
@@ -90,7 +99,7 @@ export default function CreateItem({ setOpenLocation, open }) {
 
             <div>
               <label className="block text-sm text-gray-700 mb-1">Хаяг</label>
-              <input name="address" onChange={handleChange} value={content.address} className="w-full border rounded px-3 py-2" type="text" />
+              <input name="address" onChange={handleChange} value={content.address || ""} className="w-full border rounded px-3 py-2" type="text" />
             </div>
 
             <div>
@@ -121,12 +130,15 @@ export default function CreateItem({ setOpenLocation, open }) {
               <p></p>
               <p></p>
               <button
-                onClick={handleUpload}
-                type="submit"
-                className="w-full md:w-auto mt-4 bg-black text-white font-semibold px-6 py-2 rounded-full hover:bg-gray-800 transition"
-              >
-              {isLoading ?  <BiLoaderCircle /> : 'Proceed to Next Step' }
-              </button>
+                  onClick={handleSubmit}
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full md:w-auto mt-4 font-semibold px-6 py-2 rounded-full transition ${
+                    isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-black hover:bg-gray-800 text-white'
+                  }`}
+                >
+                  {isLoading ? <BiLoaderCircle className="animate-spin" /> : 'Proceed to Next Step'}
+            </button>
             </div>
           </div>
         </div>
