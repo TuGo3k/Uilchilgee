@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
-const MultiImageUpload = () => {
-  const [images, setImages] = useState([]);
+
+const MultiImageUpload = ({ images, setImages }) => {
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
@@ -16,9 +16,10 @@ const MultiImageUpload = () => {
 
   const handleRemoveImage = (preview) => {
     setImages((prevImages) =>
-      prevImages.filter((image) => image.preview !== preview)
+      prevImages.filter((image) => image.preview !== preview) 
     );
   };
+
   const triggerFileInput = () => {
     document.getElementById("multiImageUpload").click();
   };
