@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import phoneadsdata from "@/data/phoneadsdata";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FiveStarCard from "@/app/utils/FiveStarCard";
+import Link from "next/link";
 
 // const CARD_WIDTH = 28; // vw
 // const GAP_PX = 48; // Tailwind gap-12 = 3rem
@@ -16,8 +17,8 @@ const FiveStarSection = () => {
   const [datas, setDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const intervalRef = useRef(null);
-    const [cardWidth, setCardWidth] = useState(28); // default for base
-    const [gapPx, setGapPx] = useState(48);
+  const [cardWidth, setCardWidth] = useState(28); // default for base
+  const [gapPx, setGapPx] = useState(48);
 
   // Clone эхний 3 картыг төгсгөлд нэмнэ
   const extendedData = [...phoneadsdata, ...phoneadsdata.slice(0, 3)];
@@ -39,7 +40,7 @@ const FiveStarSection = () => {
     }
   };
 
- useEffect(() => {
+  useEffect(() => {
     const updateSizes = () => {
       if (window.innerWidth >= 1024) {
         // Tailwind 'lg' is 1024px+
@@ -77,8 +78,9 @@ const FiveStarSection = () => {
     <div className="flex flex-col gap-5 lg:gap-10 py-[1vw]">
       {/* Header */}
       <div className="flex justify-between">
-      <h1 className="lg:text-3xl text-xl lg:w-[20vw] border-b-2 border-[#008ecc] lg:pb-4">
-          5 одтой <span className="lg:text-3xl text-[#008ecc]">Байгууллага</span>
+        <h1 className="lg:text-3xl text-xl lg:w-[20vw] border-b-2 border-[#008ecc] lg:pb-4">
+          5 одтой{" "}
+          <span className="lg:text-3xl text-[#008ecc]">Байгууллага</span>
         </h1>
         <div className="relative flex gap-10">
           <div className="hidden lg:flex gap-4">
@@ -95,59 +97,62 @@ const FiveStarSection = () => {
               <ChevronRight size={20} className="text-black z-50" />
             </button>
           </div>
-        <p className="flex items-center lg:text-xl gap-1 lg:gap-2 bg-white rounded-full shadow-md hover:bg-gray-100 pl-2 lg:pl-4 lg:pr-3 cursor-pointer">
-                    view all{" "}
-                    <MdKeyboardArrowRight className="lg:size-5 text-[#008ecc]" />
-                  </p>
+          <Link
+            href={"/business-category"}
+            className="flex items-center lg:text-xl gap-1 lg:gap-2 bg-white rounded-full shadow-md hover:bg-gray-100 pl-2 lg:pl-4 lg:pr-3 cursor-pointer"
+          >
+            view all
+            <MdKeyboardArrowRight className="lg:size-5 text-[#008ecc]" />
+          </Link>
         </div>
       </div>
 
       {/* Carousel */}
-     <div className="relative">
-     <div className="overflow-hidden w-full">
-        <motion.div
-          className="flex w-full gap-4 lg:gap-12"
-          animate={{
-            x: `calc(-${page * cardWidth}vw - ${page * gapPx}px)`,
-          }}
-          transition={
-            instant
-              ? { duration: 0 }
-              : { type: "spring", stiffness: 100, damping: 15 }
-          }
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          onDragEnd={handleDragEnd}
+      <div className="relative">
+        <div className="overflow-hidden w-full">
+          <motion.div
+            className="flex w-full gap-4 lg:gap-12"
+            animate={{
+              x: `calc(-${page * cardWidth}vw - ${page * gapPx}px)`,
+            }}
+            transition={
+              instant
+                ? { duration: 0 }
+                : { type: "spring", stiffness: 100, damping: 15 }
+            }
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={handleDragEnd}
+          >
+            {extendedData.map((el, index) => (
+              <motion.div
+                key={index}
+                className="w-[42vw] lg:w-[28vw] h-35 lg:h-auto flex-shrink-0"
+              >
+                <FiveStarCard
+                  name={el.name}
+                  logo={el.logo}
+                  image={el.image}
+                  bgColor={el.bgColor}
+                  labelColor={el.labelColor}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+        <button
+          onClick={prevSlide}
+          className="absolute top-1/2 -left-5 lg:hidden  bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100 "
         >
-          {extendedData.map((el, index) => (
-            <motion.div key={index} className="w-[42vw] lg:w-[28vw] h-35 lg:h-auto flex-shrink-0">
-              <FiveStarCard
-                name={el.name}
-                logo={el.logo}
-                image={el.image}
-                bgColor={el.bgColor}
-                labelColor={el.labelColor}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+          <ChevronLeft size={20} className="text-black z-50" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute top-1/2 -right-5 lg:hidden bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100"
+        >
+          <ChevronRight size={20} className="text-black z-50" />
+        </button>
       </div>
-   <button
-                  onClick={prevSlide}
-                  className="absolute top-1/2 -left-5 lg:hidden  bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100 "
-                >
-                  <ChevronLeft size={20} className="text-black z-50" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="absolute top-1/2 -right-5 lg:hidden bg-white shadow-md rounded-full p-2 lg:p-4 hover:bg-gray-100"
-                >
-                  <ChevronRight size={20} className="text-black z-50" />
-                </button>
-
-
-
-     </div>
 
       {/* Dots */}
       <div className="flex justify-center gap-2">
