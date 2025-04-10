@@ -11,8 +11,8 @@ const LocationSelector = dynamic(() => import("@/app/utils/LocationSelector"), {
 const page = () => {
   const [openLocation, setOpenLocation] = useState(false);
   const [location, setLocation] = useState({
-    latitude: 47.918873, // Ulaanbaatar latitude
-    longitude: 106.917297, // Ulaanbaatar longitude
+    latitude: 47.918873,
+    longitude: 106.917297,
   });
 
   const open = () => {
@@ -21,17 +21,16 @@ const page = () => {
   const close = () => {
     setOpenLocation(false);
   };
-  // const [open, setOpen] = useState(false);
+
   return (
     <div className="bg-white relative">
       <Header />
-      <CreateItem setOpenLocation={setOpenLocation} open={open} />
+      <CreateItem map={location} setOpenLocation={setOpenLocation} open={open} />
       <div
-        className={`w-full h-full bg-black/50 backdrop-blur-md bg- ${
-          openLocation
-            ? "fixed  inset-0 flex items-center justify-center"
-            : "hidden"
-        } z-50`}
+        className={`w-full h-full bg-black/50 backdrop-blur-md bg- ${openLocation
+          ? "fixed  inset-0 flex items-center justify-center"
+          : "hidden"
+          } z-50`}
       >
         <LocationSelector
           location={location}

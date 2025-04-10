@@ -1,3 +1,5 @@
+import { useAuth } from "@/context/AuthProvider";
+import apiData from "@/data/apidata";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +11,7 @@ const AuthModal = ({ isOpen, onClose }) => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const { login } = useAuth();
 
   const clearForm = () => {
     setEmailOrPhone("");
@@ -17,35 +20,19 @@ const AuthModal = ({ isOpen, onClose }) => {
     setError(null);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!emailOrPhone || !password || (activeTab === "signup" && !name)) {
-      setError("Бүх талбарыг бөглөнө үү");
-      return;
-    }
-
-      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
-
+  const handleLogin = async () => {
     try {
-      const url =
-        activeTab === "signup"
-          ? "http://localhost:4000/api/v1/auth/register"
-          : "http://localhost:4000/api/v1/auth/login";
-      const payload =
-        activeTab === "signup"
-          ? { name, emailOrPhone, password, isEmail: isEmail ? emailOrPhone : undefined, phone: !isEmail ? emailOrPhone : undefined  }
-          : { emailOrPhone, password, isEmail: isEmail ? emailOrPhone : undefined, phone: !isEmail ? emailOrPhone : undefined };
+      const response = await axios.post(apiData.api_url + "/auth/login", {
+        emailOrPhone: emailOrPhone,
+        password,
+      });
 
-      const response = await axios.post(url, payload, { withCredentials: true });
-      localStorage.setItem('user' , JSON.stringify(response.data.user))
-      localStorage.setItem('token' , response.data.token)
-      toast.success(response.data.message);
-      clearForm();
       onClose();
-    } catch (err) {
-      setError(err.response?.data?.message || "Алдаа гарлаа");
-      console.log(err)
+
+      login(response.data.user);
+
+    } catch (error) {
+      console.error("Login failed", error);
     }
   };
 
@@ -74,40 +61,40 @@ const AuthModal = ({ isOpen, onClose }) => {
             />
           </div>
           {activeTab === "login" ? (
-          <form className="w-full" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">И-мэйл эсвэл утас</label>
-            <input
-              value={emailOrPhone}
-              onChange={(e) => setEmailOrPhone(e.target.value)}
-              type="text"
-              placeholder="И-мэйл эсвэл утас"
-              className="shadow appearance-none border border-[#008ECC] rounded w-full py-2 px-3 text-gray-700"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Нууц үг</label>
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              placeholder="Нууц үг"
-              className="shadow appearance-none border border-[#008ECC] rounded w-full py-2 px-3 text-gray-700"
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-[#008ECC] hover:bg-blue-600 duration-200 ease-in text-white w-full font-bold py-2 px-4 rounded"
-          >
-            Нэвтрэх
-          </button>
-          <p className="text-center mt-4 cursor-pointer" onClick={() => setActiveTab("signup")}>
-            Бүртгүүлэх
-          </p>
-        </form>
-        
+            <div className="w-full" >
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">И-мэйл эсвэл утас</label>
+                <input
+                  value={emailOrPhone}
+                  onChange={(e) => setEmailOrPhone(e.target.value)}
+                  type="text"
+                  placeholder="И-мэйл эсвэл утас"
+                  className="shadow appearance-none border border-[#008ECC] rounded w-full py-2 px-3 text-gray-700"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Нууц үг</label>
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="Нууц үг"
+                  className="shadow appearance-none border border-[#008ECC] rounded w-full py-2 px-3 text-gray-700"
+                />
+              </div>
+              <button
+                onClick={() => handleLogin()}
+                className="bg-[#008ECC] hover:bg-blue-600 duration-200 ease-in text-white w-full font-bold py-2 px-4 rounded"
+              >
+                Нэвтрэх
+              </button>
+              <p className="text-center mt-4 cursor-pointer" onClick={() => setActiveTab("signup")}>
+                Бүртгүүлэх
+              </p>
+            </div>
+
           ) : (
-            <form className="w-full" onSubmit={handleSubmit}>
+            <div className="w-full" onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
                   htmlFor="signupUsername"
@@ -116,7 +103,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                   Хэрэглэгчийн нэр
                 </label>
                 <input
-                  onChange={(e) => setName(e.target.value) }
+                  onChange={(e) => setName(e.target.value)}
                   name="name"
                   value={name}
                   type="text"
@@ -133,7 +120,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                 </label>
                 <input
                   name="emailOrPhone"
-                  onChange={(e) => setEmailOrPhone(e.target.value) }
+                  onChange={(e) => setEmailOrPhone(e.target.value)}
                   value={emailOrPhone}
                   type="text"
                   placeholder="Утасны дугаар "
@@ -149,7 +136,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                 </label>
                 <input
                   name="password"
-                  onChange={(e) => setPassword(e.target.value) }
+                  onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   type="password"
                   id="signupPassword"
@@ -165,7 +152,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                   Бүртгүүлэх
                 </button>
               </div>
-            </form>
+            </div>
           )}
         </div>
       </div>
