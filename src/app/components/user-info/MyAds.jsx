@@ -1,67 +1,41 @@
+"use client"
+import getRequest from "@/app/utils/api/getRequest";
+import { useAuth } from "@/context/AuthProvider";
+import apiData from "@/data/apidata";
+import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
-const adDetails = [
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    discount: "13%",
-    price: "230",
-    name: "Double Bed & Side Tables",
-    img: "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D",
-  },
-];
 
 const MyAds = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [ads, setAds] = useState([]);
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (user && !loading) {
+      if (isLoading) {
+        getRequest({
+          route: "/product?user_id=" + user._id,
+          setValue: setAds,
+          setIsLoading: setIsLoading,
+          errorFunction: () => console.error("Failed to fetch ads"),
+        });
+      }
+    }
+  }, []);
+
+  if (isLoading) {
+    return <div className="loader">Loading...</div>;
+  }
+
+  if (ads.length === 0) {
+    return <div className="w-full h-fit text-center">Танд нийтэлсэн зар байхгүй байна.</div>;
+  }
+
   return (
     <div className="w-full h-fit min-h-[666px] flex gap-[35px] flex-col p-[32px] sm:p-[64px] rounded-[10px] border border-[#e6ebf1]">
       <h1 className="font-semibold text-2xl text-[#1A3353]">Миний зарууд</h1>
-      <div className="w-full h-[370px] grid grid-cols-2 md:grid-cols-3 p-0 sm:p-4 overflow-y-scroll gap-2">
-        {adDetails.map((ad, index) => (
+      <div className="w-full h-[370px] grid grid-cols-2 md:grid-cols-3 p-0 sm:p-4 overflow-y-scroll gap-5">
+        {ads.map((ad, index) => (
           <div
             key={index}
             className="w-full h-fit flex flex-col gap-3 relative"
@@ -71,13 +45,13 @@ const MyAds = () => {
             </span>
             <div className="w-full h-fit flex flex-col gap-3">
               <img
-                src={ad.img}
+                src={ad.covers && apiData.file_api_url + ad.covers[0]}
                 alt="image"
-                className="w-full h-[150px] md:h-[200px] lg:h-[290px] object-cover rounded-[10px]"
+                className="w-full h-[120px] md:h-[170px] lg:h-[290px] object-cover rounded-[10px]"
               />
               <div className="w-full h-fit flex flex-col">
                 <h1 className="font-normal text-[#404040] text-[16px] ">
-                  {ad.name}
+                  {ad.title}
                 </h1>
 
                 <div className="w-full h-fit flex flex-row justify-between items-center">
@@ -88,7 +62,7 @@ const MyAds = () => {
                     <p className="text-[#000] text-[12px] font-semibold ">
                       {Math.round(
                         Number(ad.price) -
-                          (Number(ad.price) * parseFloat(ad.discount)) / 100
+                        (Number(ad.price) * parseFloat(ad.discount)) / 100
                       )}
                       ₮
                     </p>

@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import ProductCard from "../../utils/ProductCard";
 import Link from "next/link";
 
-export const Content = ({ datas }) => {
+export const VipCategory = ({ datas }) => {
   const [search, setSearch] = useState("");
 
   const filteredData = datas.filter((el) =>

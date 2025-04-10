@@ -1,13 +1,24 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from ".././components/Header"; // Adjust path if necessary
 import { Navbar } from "../components/Category/Navbar";
 import { Content } from "../components/Category/Content";
 import Footer from "../components/Footer";
 import { FaSearch } from "react-icons/fa";
+import getRequest from "../utils/api/getRequest";
 export default function CategoryPage() {
   const [search, setSearch] = React.useState("");
   const [open, setOpen] = React.useState(true);
+
+    const [isLoading , setIsLoading ]= useState(true)
+    const [datas , setDatas] = useState([])
+  
+    useEffect(() => {
+      if(isLoading){
+        getRequest({route: '/product?sort=-createdAt&type=normal', setValue: setDatas, setIsLoading: setIsLoading})
+      }
+    }, [isLoading])
+  
   return (
     <div className="w-full h-full bg-white">
       <Header />
@@ -16,7 +27,7 @@ export default function CategoryPage() {
           <Navbar />
         </div>
         <div className="content w-full lg:w-3/4 px-4 sm:px-6 lg:px-10 pt-5">
-          <Content />
+          <Content datas={datas}/>
         </div>
       </div>
       <Footer />

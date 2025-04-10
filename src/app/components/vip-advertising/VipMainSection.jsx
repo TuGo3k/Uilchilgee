@@ -5,11 +5,11 @@ import MainVipAds from "./MainVipAds";
 import ProductIntro from "./ProductIntro";
 import CommonQuestions from "./CommonQuestions";
 
-const VipMainSection = () => {
+const VipMainSection = ( { product } ) => {
   return (
     <VipSection>
       <VipDetails />
-      <MainVipAds />
+      <MainVipAds product={product} />
       <ProductIntro />
       <CommonQuestions />
     </VipSection>
