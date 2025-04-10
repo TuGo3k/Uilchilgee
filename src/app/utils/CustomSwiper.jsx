@@ -1,55 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import getRequest from "./api/getRequest";
+import apiData from "@/data/apidata";
 
 const CustomSwiper = ({ darkmode = false }) => {
   const [page, setPage] = useState(0);
+  const [sliders, setSliders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const items = [
-    {
-      id: 1,
-      title: "Slide 1",
-      content: "Content 1",
-      role: "Role A",
-      cover: "1.jpg",
-    },
-    {
-      id: 2,
-      title: "Slide 2",
-      content: "Content 2",
-      role: "Role B",
-      cover: "2.jpg",
-    },
-    {
-      id: 3,
-      title: "Slide 3",
-      content: "Content 3",
-      role: "Role C",
-      cover: "3.jpg",
-    },
-    {
-      id: 4,
-      title: "Slide 4",
-      content: "Content 4",
-      role: "Role D",
-      cover: "4.jpg",
-    },
-    {
-      id: 5,
-      title: "Slide 5",
-      content: "Content 5",
-      role: "Role E",
-      cover: "5.jpg",
-    },
-  ];
+  useEffect(() => {
+    if (isLoading) {
+      getRequest({ route: '/slider', setValue: setSliders, setLoading: setIsLoading })
+    }
+  }, [isLoading])
 
   const nextSlide = () => {
-    setPage((prev) => (prev + 1) % items.length);
+    setPage((prev) => (prev + 1) % sliders.length);
   };
 
   const prevSlide = () => {
-    setPage((prev) => (prev - 1 + items.length) % items.length);
+    setPage((prev) => (prev - 1 + sliders.length) % sliders.length);
   };
 
   const handleDragEnd = (event, info) => {
@@ -87,34 +59,39 @@ const CustomSwiper = ({ darkmode = false }) => {
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           onDragEnd={handleDragEnd}
-          
+
         >
-          {items.map((testimonial, idx) => (
+          {sliders.map((testimonial, idx) => (
             <motion.div key={idx} className="w-full flex-shrink-0 ">
               <div
-                className={`p-6 rounded-lg text-center transition-all duration-500 min-h-100 ${
-                  darkmode
-                    ? "bg-[#170f2f] text-white"
-                    : "bg-slate-400 text-black"
-                } hover:bg-gradient-to-r hover:from-[#141f9d] hover:to-[#ec0295] hover:text-black`}
+                className={`p-6 rounded-lg text-center w-full transition-all duration-500 min-h-100 ${darkmode
+                  ? "bg-[#170f2f] text-white"
+                  : "bg-blue-400 text-black"
+                  } hover:bg-gradient-to-r hover:from-[#6f94e5] hover:to-[#f580a9] hover:text-black
+                  flex justify-around items-center`}
               >
-                <p className="text-lg italic text-left">
-                  "{testimonial.content}"
-                </p>
+                <div>
+                  <p className="text-5xl font-bold text-white italic text-left">
+                    {testimonial.title}
+                  </p>
+                  <p className="text-sm text-white/80 text-left mt-4">
+                    {testimonial.content}
+                  </p>
+                </div>
+                <img src={apiData.file_api_url + testimonial.image} alt="" />
               </div>
             </motion.div>
           ))}
-         
+
         </motion.div>
       </div>
       <div className="flex justify-center  gap-2 z-50 absolute bottom-5 lg:bottom-20 left-1/2 lg:left-1/10 transform  -translate-x-1/2">
-        {items.map((_, index) => (
+        {sliders.map((_, index) => (
           <button
             key={index}
             onClick={() => setPage(index)}
-            className={`h-2 rounded-full transition-all cursor-pointer duration-300 ${
-              index === page ? "w-6 bg-white" : "w-2 bg-white"
-            }`}
+            className={`h-2 rounded-full transition-all cursor-pointer duration-300 ${index === page ? "w-6 bg-white" : "w-2 bg-white"
+              }`}
           ></button>
         ))}
       </div>

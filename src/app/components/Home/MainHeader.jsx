@@ -17,37 +17,8 @@ const MainHeader = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  // const [hoveredMenu, setHoveredMenu] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, login, logout } = useAuth();
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const userData = localStorage.getItem("user");
-  //     let parsedUser = null;
-
-  //     if (userData) {
-  //       try {
-  //         parsedUser = JSON.parse(userData);
-  //       } catch (error) {
-  //         console.error("JSON-ийг задлах үед алдаа гарлаа:", error);
-  //       }
-  //     }
-  //   }
-  // }, []);
-
-  // const logout = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     await axios.post(apiData.api_url + '/api/v1/auth/logout', { withCredentials: true })
-  //     localStorage.removeItem('token')
-  //     toast.success("Амжилттай гарлаа!");
-  //     router.push('/')
-  //   } catch (err) {
-  //     toast.error("Гарах үед алдаа гарлаа!");
-  //     console.log(err)
-  //   }
-  // }
 
   return (
     <div className="flex flex-col relative">

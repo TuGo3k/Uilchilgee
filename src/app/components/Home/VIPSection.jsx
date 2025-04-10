@@ -10,18 +10,16 @@ import toast from "react-hot-toast";
 
 const VIPSection = () => {
   const [page, setPage] = useState(0);
-  const [cardWidth, setCardWidth] = useState(16); 
+  const [cardWidth, setCardWidth] = useState(16);
   const [gapPx, setGapPx] = useState(40);
-  const [isLoading , setIsLoading] = useState(false)
-  const [datas , setDatas] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [datas, setDatas] = useState([])
 
   useEffect(() => {
-    setIsLoading(true);
-    axios.get('http://localhost:4000/api/v1/product?sort=-createdAt&type=special')
-    .then((e) => setDatas(e.data.data))
-    .catch((err) => toast.error('Network error'))
-    .finally(() => {setIsLoading(false)})
-  })
+    if (isLoading) {
+      getRequest({ route: '/product?sort=-createdAt&type=vip', setValue: setDatas, setIsLoading })
+    }
+  }, [isLoading]);
 
   const nextSlide = () => {
     setPage((prev) => (prev + 1) % data.length);
