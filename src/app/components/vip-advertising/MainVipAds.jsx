@@ -1,17 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import VipAds from "./VipAds";
+import getRequest from "@/app/utils/api/getRequest";
 
 const Dropdown = () => {
   const [open, setOpen] = useState(false);
   const [selectValue, setSelectValue] = useState("");
-  const options = ["Option 1", "Option 2", "Option 3"];
+  const [datas , setDatas] = useState([]);
+  const [isLoading , setIsLoading ] = useState(true)
 
   const handleOptionClick = (option) => {
     console.log("Selected:", option);
     setOpen(false);
   };
+
+  useEffect(() =>   {
+    if(isLoading){
+      getRequest({route: '/category' , setValue: setDatas , setIsLoading: setIsLoading})
+    }
+  },[isLoading])
 
   return (
     <div className="relative inline-block ">
@@ -24,7 +32,7 @@ const Dropdown = () => {
       </button>
       {open && (
         <ul className="absolute left-0 overflow-hidden mt-2 w-full bg-[#282828] text-white shadow-lg rounded-lg z-10">
-          {options.map((option, index) => (
+          {datas.map((option, index) => (
             <li
               key={index}
               className="px-6 py-2 hover:bg-white text-white hover:text-[#282828] cursor-pointer"
@@ -33,7 +41,7 @@ const Dropdown = () => {
                 setSelectValue(option);
               }}
             >
-              {option}
+              {option.title}  
             </li>
           ))}
         </ul>
@@ -42,7 +50,7 @@ const Dropdown = () => {
   );
 };
 
-const MainVipAds = () => {
+const MainVipAds = ({product}) => {
   return (
     <section className="w-full px-[10vw] h-fit flex flex-col gap-[60px]">
       <div className="flex sm:flex-row flex-col gap-5 justify-between items-center">
@@ -56,7 +64,7 @@ const MainVipAds = () => {
         </div>
         <Dropdown />
       </div>
-      <VipAds />
+      <VipAds product={product} />
     </section>
   );
 };

@@ -1,4 +1,5 @@
-export default function DescriptionSection() {
+"use client"
+export default function DescriptionSection({data}) {
   return (
     <div className="px-4 md:px-[8vw] mx-auto py-10 md:py-20">
       {/* Title with Divider */}
@@ -9,7 +10,7 @@ export default function DescriptionSection() {
 
       {/* Paragraph */}
       <p className="mt-6 text-sm md:text-base text-gray-600 leading-relaxed">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -18,16 +19,16 @@ export default function DescriptionSection() {
         ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet,
         consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
         et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. */}
+        {data?.description}
       </p>
 
       {/* Bullet Points */}
       <ul className="mt-8 md:mt-10 text-sm md:text-base text-gray-600 space-y-2 list-disc pl-4">
         <li>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua.
+         {data?.description}
         </li>
-        <li>
+        {/* <li>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
           veniam, quis nostrud exercitation ullamco laboris.
@@ -36,7 +37,7 @@ export default function DescriptionSection() {
         <li>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua.
-        </li>
+        </li> */}
       </ul>
     </div>
   );

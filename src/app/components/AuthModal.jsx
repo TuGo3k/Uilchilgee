@@ -32,7 +32,6 @@ const AuthModal = ({ isOpen, onClose }) => {
         activeTab === "signup"
           ? "http://localhost:4000/api/v1/auth/register"
           : "http://localhost:4000/api/v1/auth/login";
-
       const payload =
         activeTab === "signup"
           ? { name, emailOrPhone, password, isEmail: isEmail ? emailOrPhone : undefined, phone: !isEmail ? emailOrPhone : undefined  }

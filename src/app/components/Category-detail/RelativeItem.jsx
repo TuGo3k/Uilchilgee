@@ -1,7 +1,6 @@
-import data from "@/data/data";
 import ProductCard from "@/app/utils/ProductCard";
 
-export default function RelativeItem() {
+export default function RelativeItem({data}) {
   return (
     <div className="w-full px-[8vw] flex flex-col gap-10 py-20">
       <h1 className="text-3xl sm:text-4xl md:text-5xl text-left w-full">Ижил төстэй бараанууд</h1>
