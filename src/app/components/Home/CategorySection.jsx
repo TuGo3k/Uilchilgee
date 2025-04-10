@@ -22,6 +22,8 @@ const CategorySection = () => {
   //   );
   // };
 
+  
+
   const handleDragEnd = (event, info) => {
     const swipe = info.offset.x;
 

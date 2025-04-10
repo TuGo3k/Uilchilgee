@@ -1,11 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import phoneadsdata from "@/data/phoneadsdata";
 import FiveStarCard from "@/app/utils/FiveStarCard";
+
 const BusinessContent = () => {
   const [search, setSearch] = useState("");
   const extendedData = [...phoneadsdata, ...phoneadsdata.slice(0, 3)];
+
+
 
   return (
     <div className="flex flex-col gap-10 justify-between">

@@ -82,6 +82,15 @@ const FiveStarSection = () => {
           5 одтой{" "}
           <span className="lg:text-3xl text-[#008ecc]">Байгууллага</span>
         </h1>
+        {/* <div id="realstar">
+          <div class="star-container1">
+            <div class="star-shape1">
+              <div class="star-container2">
+                <div class="star-shape2"></div>
+              </div>
+            </div>
+          </div>
+        </div> */}
         <div className="relative flex gap-10">
           <div className="hidden lg:flex gap-4">
             <button
@@ -107,6 +116,18 @@ const FiveStarSection = () => {
         </div>
       </div>
 
+      {/* <div id="star">
+        <div className="card ">
+          <div className="inner">
+            <h1>Animate Border</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Recusandae accusamus provident, iste quam cum laudantium quaerat?
+              In vero mollitia quos!
+            </p>
+          </div>
+        </div>
+      </div> */}
       {/* Carousel */}
       <div className="relative">
         <div className="overflow-hidden w-full">
