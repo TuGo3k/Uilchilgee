@@ -38,13 +38,13 @@ const CustomSwiper = ({ darkmode = false }) => {
     <div className="relative">
       <button
         onClick={prevSlide}
-        className="absolute -left-5 lg:-left-10 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100 "
+        className="absolute -left-5  lg:-left-10 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100 "
       >
         <ChevronLeft size={25} className="text-black z-50" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute -right-5 lg:-right-10 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100"
+        className="absolute -right-5  lg:-right-10 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md rounded-full p-2 lg:p-7 hover:bg-gray-100"
       >
         <ChevronRight size={25} className="text-black z-50" />
       </button>
@@ -53,7 +53,7 @@ const CustomSwiper = ({ darkmode = false }) => {
         {/* Arrows */}
 
         <motion.div
-          className="flex w-full relative"
+          className="flex w-full relative min-h-100"
           animate={{ x: `-${page * 100}%` }}
           transition={{ type: "spring", stiffness: 100, damping: 15 }}
           drag="x"
@@ -64,7 +64,7 @@ const CustomSwiper = ({ darkmode = false }) => {
           {sliders.map((testimonial, idx) => (
             <motion.div key={idx} className="w-full flex-shrink-0 ">
               <div
-                className={`p-6 rounded-lg text-center w-full transition-all duration-500 min-h-100 ${darkmode
+                className={`p-6 rounded-lg text-center w-full transition-all duration-500 min-h-100  ${darkmode
                   ? "bg-[#170f2f] text-white"
                   : "bg-blue-400 text-black"
                   } hover:bg-gradient-to-r hover:from-[#6f94e5] hover:to-[#f580a9] hover:text-black

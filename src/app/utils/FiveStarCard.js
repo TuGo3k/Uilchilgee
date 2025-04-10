@@ -4,8 +4,8 @@ export default function FiveStarCard({
   name,
   logo,
   image,
-  bgColor,
-  labelColor,
+  bgcolor,
+  labelcolor,
 }) {
   const Star = () => (
     <div className="star-container1 w-full justify-center items-center flex   size-4 md:size-6 lg:size-12 overflow-hidden h-full ">
@@ -22,12 +22,12 @@ export default function FiveStarCard({
   return (
     <div
       className={`rounded-md lg:rounded-xl cursor-pointer p-2 lg:p-6 flex justify-between w-full relative overflow-hidden`}
-      style={{ backgroundColor: bgColor }}
+      style={{ backgroundColor: bgcolor }}
     >
       <div className="flex flex-col justify-between gap-2 w-1/2">
         <div
           className="md:text-xl text-[11px]  font-medium lg:px-4 px-1 z-21 py-1 rounded-md w-fit"
-          style={{ backgroundColor: labelColor }}
+          style={{ backgroundColor: labelcolor }}
         >
           {name.toUpperCase()}
         </div>
@@ -56,11 +56,11 @@ export default function FiveStarCard({
         <img src={image} alt={`${name} product`} className="object-cover " />
       </div>
       <div
-        style={{ borderColor: labelColor }}
+        style={{ borderColor: labelcolor }}
         className={`block absolute size-40 lg:size-72 border-4 p-2 lg:p-5 -top-10 lg:-top-20 -right-15 lg:-right-10 rounded-full z-10`}
       >
         <div
-          style={{ background: labelColor }}
+          style={{ background: labelcolor }}
           className={`w-full h-full  p-10 rounded-full`}
         ></div>
       </div>

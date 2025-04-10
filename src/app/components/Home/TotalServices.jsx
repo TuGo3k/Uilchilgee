@@ -7,19 +7,54 @@ import totalservicesdata from '@/data/totalservicesdata';
 import { useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TotalServicesCard from '@/app/utils/TotalServicesCard';
-
+import getRequest from "@/app/utils/api/getRequest";
 const TotalServices = () => {
     const [page, setPage] = useState(0);
       const [cardWidth, setCardWidth] = useState(12); // default for base
       const [gapPx, setGapPx] = useState(64);
-
-  const nextSlide = () => {
-    setPage((prev) => (prev + 1) % totalservicesdata.length);
-  };
+    const [datas, setDatas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+      const [itemsPerPage, setItemsPerPage] = useState(1);
+    useEffect(() => {
+      const handleResize = () => {
+        const vw = window.innerWidth;
+        if (vw >= 1024) {
+          // Desktop: lg:w-[12vw]
+          setItemsPerPage(Math.floor(100 / 12)); // ≈8
+        } else {
+          // Mobile: w-[20vw]
+          setItemsPerPage(Math.floor(100 / 20)); // ≈5
+        }
+      };
+  
+      handleResize(); // Run once on mount
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+  const maxPage = Math.ceil(datas.length / itemsPerPage) - 1;
 
   const prevSlide = () => {
-    setPage((prev) => (prev - 1 + totalservicesdata.length) % totalservicesdata.length);
+    if (page > 0) setPage((prev) => prev - 1);
   };
+
+  const nextSlide = () => {
+    if (page < maxPage) setPage((prev) => prev + 1);
+  };
+
+    useEffect(() => {
+      if(isLoading){
+        getRequest({route: '/product?type=normal', setValue: setDatas, setIsLoading: setIsLoading})
+      }
+    }, [isLoading])
+    console.log("total", datas)
+
+  // const nextSlide = () => {
+  //   setPage((prev) => (prev + 1) % datas.length);
+  // };
+
+  // const prevSlide = () => {
+  //   setPage((prev) => (prev - 1 + datas.length) % datas.length);
+  // };
 
   const handleDragEnd = (event, info) => {
     const swipe = info.offset.x;
@@ -52,12 +87,12 @@ const TotalServices = () => {
   //  useEffect(() => {
   //   const interval = setInterval(() => {
   //     setPage((prev) =>
-  //       prev === totalservicesdata.length - 1 ? 0 : prev + 1
+  //       prev === datas.length - 1 ? 0 : prev + 1
   //     );
   //   }, 3000); // scroll every 3 seconds
 
   //   return () => clearInterval(interval); // cleanup
-  // }, [totalservicesdata.length]);
+  // }, [datas.length]);
   return (
     <div className="flex flex-col gap-5 lg:gap-10 py-[2vw]">
     <div className="flex justify-between">
@@ -69,13 +104,19 @@ const TotalServices = () => {
         <div className=" gap-4 lg:flex hidden">
           <button
             onClick={prevSlide}
-            className="  bg-white shadow-md rounded-full px-4 hover:bg-gray-100 "
+            disabled={page === 0}
+            className={`bg-white shadow-md rounded-full px-4 hover:bg-gray-100 ${
+              page === 0 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             <ChevronLeft size={20} className="text-black z-50" />
           </button>
           <button
             onClick={nextSlide}
-            className=" bg-white shadow-md rounded-full px-4 hover:bg-gray-100"
+            disabled={page === maxPage}
+            className={`bg-white shadow-md rounded-full px-4 hover:bg-gray-100 ${
+              page === maxPage ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             <ChevronRight size={20} className="text-black z-50" />
           </button>
@@ -97,7 +138,7 @@ drag="x"
 dragConstraints={{ left: 0, right: 0 }}
 onDragEnd={handleDragEnd}
 >
-{totalservicesdata.map((el, index) => (
+{datas.map((el, index) => (
   <motion.div
     key={index}
     className="lg:w-[12vw] w-[20vw] flex-shrink-0"
@@ -105,7 +146,7 @@ onDragEnd={handleDragEnd}
     <TotalServicesCard
         category={el.category}
         title={el.title}
-        hightlight={el.highlight}
+        covers={el.covers[0]}
     />
   </motion.div>
 ))}

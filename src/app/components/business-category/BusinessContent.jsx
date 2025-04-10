@@ -7,7 +7,15 @@ import FiveStarCard from "@/app/utils/FiveStarCard";
 const BusinessContent = () => {
   const [search, setSearch] = useState("");
   const extendedData = [...phoneadsdata, ...phoneadsdata.slice(0, 3)];
-
+  const [isLoading , setIsLoading ]= useState(true)
+    const [datas , setDatas] = useState([])
+  
+    useEffect(() => {
+      if(isLoading){
+        getRequest({route: '/fivestarcompany', setValue: setDatas, setIsLoading: setIsLoading})
+      }
+    }, [isLoading])
+    console.log(datas)
 
 
   return (

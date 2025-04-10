@@ -7,11 +7,21 @@ import { motion } from "framer-motion";
 import categoriesdata from "@/data/categoriesdata";
 import { useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import getRequest from "@/app/utils/api/getRequest";
 const CategorySection = () => {
   const [page, setPage] = useState(0);
   const [cardWidth, setCardWidth] = useState(10); // default for base
   const [gapPx, setGapPx] = useState(60);
   const [itemsPerPage, setItemsPerPage] = useState(1);
+    const [datas, setDatas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      if(isLoading){
+        getRequest({route: '/subcategory', setValue: setDatas, setIsLoading: setIsLoading})
+      }
+    }, [isLoading])
+    // console.log("category ", datas)
   // const nextSlide = () => {
   //   setPage((prev) => (prev + 1) % categoriesdata.length);
   // };
@@ -21,8 +31,6 @@ const CategorySection = () => {
   //     (prev) => (prev - 1 + categoriesdata.length) % categoriesdata.length
   //   );
   // };
-
-  
 
   const handleDragEnd = (event, info) => {
     const swipe = info.offset.x;
@@ -67,7 +75,7 @@ const CategorySection = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const maxPage = Math.ceil(categoriesdata.length / itemsPerPage) - 1;
+  const maxPage = Math.ceil(datas.length / itemsPerPage) - 1;
 
   const prevSlide = () => {
     if (page > 0) setPage((prev) => prev - 1);
@@ -136,7 +144,7 @@ const CategorySection = () => {
       <div className="relative">
         <div className="overflow-hidden w-full">
           <motion.div
-            className="flex  w-full  justify-between gap-3 lg:gap-15 "
+            className="flex  w-full  justify-start gap-3 lg:gap-15 "
             animate={{
               x: `calc(-${page * cardWidth}vw - ${page * gapPx}px)`,
             }}
@@ -145,13 +153,13 @@ const CategorySection = () => {
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
           >
-            {categoriesdata.map((el, index) => (
+            {datas.map((el, index) => (
               <motion.div
                 key={index}
                 className={`lg:w-[10vw] w-[20vw]  flex-shrink-0  `}
               >
                 <CategoryCards
-                  name={el.name}
+                  title={el.title}
                   image={el.image}
                   // width={CARD_WIDTH}
                 />

@@ -21,7 +21,7 @@ const MyAds = () => {
         });
       }
     }
-  }, []);
+  }, [user, isLoading]);
 
   if (isLoading) {
     return <div className="loader">Loading...</div>;

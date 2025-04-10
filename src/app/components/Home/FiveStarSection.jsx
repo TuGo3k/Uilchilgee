@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import FiveStarCard from "@/app/utils/FiveStarCard";
 import Link from "next/link";
 
+import getRequest from "@/app/utils/api/getRequest";
 // const CARD_WIDTH = 28; // vw
 // const GAP_PX = 48; // Tailwind gap-12 = 3rem
 
@@ -19,17 +20,26 @@ const FiveStarSection = () => {
   const intervalRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(28); // default for base
   const [gapPx, setGapPx] = useState(48);
+    const [itemsPerPage, setItemsPerPage] = useState(1);
 
   // Clone эхний 3 картыг төгсгөлд нэмнэ
-  const extendedData = [...phoneadsdata, ...phoneadsdata.slice(0, 3)];
+  const extendedData = [...datas, ...datas.slice(0, 3)];
 
-  const nextSlide = () => {
-    setPage((prev) => prev + 1);
-  };
+  useEffect(() => {
+    if(isLoading){
+      getRequest({route: '/fivestarcompany', setValue: setDatas, setIsLoading: setIsLoading})
+    }
+  }, [isLoading])
+  // console.log(datas)
+ 
+  
+  // const nextSlide = () => {
+  //   setPage((prev) => prev + 1);
+  // };
 
-  const prevSlide = () => {
-    setPage((prev) => (prev === 0 ? phoneadsdata.length - 1 : prev - 1));
-  };
+  // const prevSlide = () => {
+  //   setPage((prev) => (prev === 0 ? datas.length - 1 : prev - 1));
+  // };
 
   const handleDragEnd = (event, info) => {
     const swipe = info.offset.x;
@@ -56,6 +66,32 @@ const FiveStarSection = () => {
     return () => window.removeEventListener("resize", updateSizes);
   }, []);
 
+    useEffect(() => {
+      const handleResize = () => {
+        const vw = window.innerWidth;
+        if (vw >= 1024) {
+          // Desktop: lg:w-[12vw]
+          setItemsPerPage(Math.floor(100 / 12)); // ≈8
+        } else {
+          // Mobile: w-[20vw]
+          setItemsPerPage(Math.floor(100 / 20)); // ≈5
+        }
+      };
+  
+      handleResize(); // Run once on mount
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+  const maxPage = Math.ceil(datas.length / itemsPerPage) - 1;
+
+  const prevSlide = () => {
+    if (page > 0) setPage((prev) => prev - 1);
+  };
+
+  const nextSlide = () => {
+    if (page < maxPage) setPage((prev) => prev + 1);
+  };
+
   // useEffect(() => {
   //   intervalRef.current = setInterval(() => {
   //     nextSlide();
@@ -65,7 +101,7 @@ const FiveStarSection = () => {
   // }, []);
 
   // useEffect(() => {
-  //   if (page === phoneadsdata.length) {
+  //   if (page === datas.length) {
   //     setTimeout(() => {
   //       setInstant(true);
   //       setPage(0);
@@ -95,13 +131,19 @@ const FiveStarSection = () => {
           <div className="hidden lg:flex gap-4">
             <button
               onClick={prevSlide}
-              className="bg-white shadow-md rounded-full px-4 hover:bg-gray-100"
+              disabled={page === 0}
+              className={`bg-white shadow-md rounded-full px-4 hover:bg-gray-100 ${
+                page === 0 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               <ChevronLeft size={20} className="text-black z-50" />
             </button>
             <button
+             disabled={page === maxPage}
               onClick={nextSlide}
-              className="bg-white shadow-md rounded-full px-4 hover:bg-gray-100"
+              className={`bg-white shadow-md rounded-full px-4 hover:bg-gray-100 ${
+                page === maxPage ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               <ChevronRight size={20} className="text-black z-50" />
             </button>
@@ -154,8 +196,8 @@ const FiveStarSection = () => {
                   name={el.name}
                   logo={el.logo}
                   image={el.image}
-                  bgColor={el.bgColor}
-                  labelColor={el.labelColor}
+                  bgcolor={el.bgcolor}
+                  labelcolor={el.labelcolor}
                 />
               </motion.div>
             ))}
@@ -177,12 +219,12 @@ const FiveStarSection = () => {
 
       {/* Dots */}
       <div className="flex justify-center gap-2">
-        {phoneadsdata.map((_, index) => (
+        {datas.map((_, index) => (
           <button
             key={index}
             onClick={() => setPage(index)}
             className={`h-2 rounded-full cursor-pointer transition-all duration-300 ${
-              index === page % phoneadsdata.length
+              index === page % datas.length
                 ? "w-6 bg-[#008ecc]"
                 : "w-2 bg-[#f5f5f5]"
             }`}
