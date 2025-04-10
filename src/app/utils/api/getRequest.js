@@ -1,10 +1,13 @@
+import apidata from "@/data/apidata";
 import axios from "axios";
-import apiData from "../../../data/apidata";
 
-export const getRequest = ({ setIsLoading, setValue, route }) => {
-  axios
-    .get(apiData + route)
-    .then((e) => setValue(e.data.data))
-    .catch((e) => console.log(e))
-    .finally(() => setIsLoading(false));
+const getRequest = async ({ route, setValue, setIsLoading, errorFunction }) => {
+  return axios.get(apidata.api_url + route)
+    .then((e) => {
+      setValue(e.data.data);
+    })
+    .catch((e) => errorFunction && errorFunction())
+    .finally(() => setIsLoading && setIsLoading(false))
 };
+
+export default getRequest;

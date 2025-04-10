@@ -11,45 +11,43 @@ import { IoMdClose } from "react-icons/io";
 import AuthModal from "../AuthModal";
 import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import apiData from "@/data/apidata";
+import { useAuth } from "@/context/AuthProvider";
+
 const MainHeader = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   // const [hoveredMenu, setHoveredMenu] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const userData = localStorage.getItem("user");
-  axios.defaults.withCredentials = true;
+  const { user, login, logout } = useAuth();
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const userData = localStorage.getItem("user");
-      let parsedUser = null;
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const userData = localStorage.getItem("user");
+  //     let parsedUser = null;
 
-      if (userData) {
-        try {
-          parsedUser = JSON.parse(userData);
-        } catch (error) {
-          console.error("JSON-ийг задлах үед алдаа гарлаа:", error);
-        }
-      }
-    }
-  }, []);
+  //     if (userData) {
+  //       try {
+  //         parsedUser = JSON.parse(userData);
+  //       } catch (error) {
+  //         console.error("JSON-ийг задлах үед алдаа гарлаа:", error);
+  //       }
+  //     }
+  //   }
+  // }, []);
 
-  const logout = async (e) => {
-    e.preventDefault()
-    try{
-      await axios.post(apiData.api_url + '/api/v1/auth/logout', {withCredentials : true})
-      localStorage.removeItem('token')
-      toast.success("Амжилттай гарлаа!");
-      router.push('/')
-    }catch(err){
-      toast.error("Гарах үед алдаа гарлаа!");
-      console.log(err)
-    }
-  }
+  // const logout = async (e) => {
+  //   e.preventDefault()
+  //   try {
+  //     await axios.post(apiData.api_url + '/api/v1/auth/logout', { withCredentials: true })
+  //     localStorage.removeItem('token')
+  //     toast.success("Амжилттай гарлаа!");
+  //     router.push('/')
+  //   } catch (err) {
+  //     toast.error("Гарах үед алдаа гарлаа!");
+  //     console.log(err)
+  //   }
+  // }
 
   return (
     <div className="flex flex-col relative">
@@ -85,7 +83,7 @@ const MainHeader = () => {
       <div className="flex items-center justify-between relative py-2">
         <div className="flex items-center gap-2 lg:gap-5">
           {" "}
-          <BiMenuAltLeft onClick={() => {setMobileMenuOpen(!mobileMenuOpen),setHoveredMenu("") }} className="lg:size-10 size-7 text-[#008ECC] lg:hidden flex" />
+          <BiMenuAltLeft onClick={() => { setMobileMenuOpen(!mobileMenuOpen), setHoveredMenu("") }} className="lg:size-10 size-7 text-[#008ECC] lg:hidden flex" />
           <Link
             href="/"
             className="text-[#008ECC] text-xl lg:text-4xl font-lg lg:font-md"
@@ -96,11 +94,10 @@ const MainHeader = () => {
         <div
           className={`mobile_search z-30 bg-[#f5f5f5] rounded-full items-center flex lg:hidden 
     transition-all duration-300 ease-in-out overflow-hidden 
-    ${
-      open
-        ? "w-full  px-4 absolute top-0 right-0 transform "
-        : "size-10 px-4 justify-center "
-    }`}
+    ${open
+              ? "w-full  px-4 absolute top-0 right-0 transform "
+              : "size-10 px-4 justify-center "
+            }`}
         >
           <input
             type="text"
@@ -137,7 +134,7 @@ const MainHeader = () => {
             className="w-full  px-3 py-3 text-lg sm:text-xl  border-gray-300 focus:outline-none"
           />
         </div>
-        {!userData ? (
+        {!user ? (
           <div className=" gap-10 lg:flex hidden  cursor-pointer">
             <div className="flex gap-2" onClick={() => setIsModalOpen(true)}>
               <LuUser className="text-[#008ECC]" size={25} />
@@ -152,11 +149,11 @@ const MainHeader = () => {
           </div>
         ) : (
           <div className=" gap-10 lg:flex hidden  cursor-pointer">
-            <div className="flex gap-2"onClick={() => router.push("user-ifno")}>
+            <Link href={'user-info'} className="flex gap-2">
               <LuUser className="text-[#008ECC]" size={25} />
               <h2 >Profile</h2>
-            </div>
-            <div className="flex gap-2" onClick={logout}>
+            </Link>
+            <div className="flex gap-2" onClick={() => logout()}>
               <LogOut className="text-[#008ECC]" size={25} />
               <h2 >гарах</h2>
             </div>

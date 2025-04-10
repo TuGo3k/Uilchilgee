@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/context/AuthProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -10,16 +11,22 @@ const sideBarButtons = [
 ];
 
 const UserSideBar = () => {
+  const { user, loading } = useAuth();
   const pathname = usePathname();
+
+  if (loading) {
+    return <div className="loader"></div>
+  }
+
   return (
-    <div className="h-fit lg:min-h-[666px] w-full lg:w-[40vw] flex flex-col relative pt-[45px] pb-[150px] px-[32px] sm:px-[58px] rounded-[10px] bg-white border border-[#E6EBF1]">
+    <div className="h-fit  w-full lg:w-[40vw] flex flex-col relative px-[32px] sm:px-[58px] rounded-[10px] bg-white border border-[#E6EBF1]">
       <div className="w-full h-full flex flex-col gap-5 items-center justify-center rounded-[10px]  p-4">
         <img
           src="https://s3-alpha-sig.figma.com/img/0276/f9db/b44b48e206e55ed28769145e2315c42f?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0oe5wKNPgm3mp5u~oZtI4S5orvvT6jCnIup7fLQD7gX3zJDHUn-DU7hy3uyulqHKyFRXA9BuqirePfrlJYWj8BJvHbL4mGSrff6Cz3rWe~XJ86ioNDEUCYIAXJPWrEUoNvoP7EZd48zFzQV7re7aFk1aWRYuHpwr2Dk~42W0UMyArTz64ph9jD7Dr64Tp0MoWZEocwKi~Weu7gcmzLleleYCkt2U8d~a~pHCaCbJJ~yAiloIwGk64yOe-tT40GGwukauro1f0-8~ocYuwKN646yNnr4aP7Kbj~CJKRcTWyZZtpG1ZZgt3rYUoD-YdfC0vRNrDDxY6cypi-kKZlvHg__"
           alt="logo"
           className="w-[85px] h-[85px] rounded-full"
         />
-        <h1 className="font-semibold text-[17px]">Zolbootbaatar</h1>
+        <h1 className="font-semibold text-[17px]">{user.name}</h1>
       </div>
       <div className="w-full h-fit flex text-[12px] font-normal flex-col gap-5 items-start justify-start mb-7">
         {sideBarButtons.map((button, index) => (
