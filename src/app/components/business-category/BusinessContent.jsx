@@ -9,7 +9,10 @@ const BusinessContent = () => {
 
   return (
     <div className="flex flex-col gap-10 justify-between">
-      <h1 className="text-3xl sm:text-4xl lg:text-5xl">5 одтой Байгууллага</h1>
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl">
+        5 одтой <span className="text-[#008ecc]">Байгууллага</span>
+      </h1>
+
       <div className="relative hidden lg:flex w-full">
         <input
           type="text"

@@ -59,7 +59,7 @@ const TotalServices = () => {
   //   return () => clearInterval(interval); // cleanup
   // }, [totalservicesdata.length]);
   return (
-    <div className="flex flex-col gap-5 lg:gap-10 py-[1vw]">
+    <div className="flex flex-col gap-5 lg:gap-10 py-[2vw]">
     <div className="flex justify-between">
       {" "}
       <h1 className="lg:text-3xl text-xl lg:w-[20vw] border-b-2 border-[#008ecc] lg:pb-4">
