@@ -1,20 +1,55 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { useState } from "react";
-import { IoMenuSharp } from "react-icons/io5";
 import { LuUser } from "react-icons/lu";
-import { LuShoppingCart } from "react-icons/lu";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
 import AuthModal from "../AuthModal";
+import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import apiData from "@/data/apidata";
 const MainHeader = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const userData = localStorage.getItem("user");
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem("user");
+      let parsedUser = null;
+
+      if (userData) {
+        try {
+          parsedUser = JSON.parse(userData);
+        } catch (error) {
+          console.error("JSON-ийг задлах үед алдаа гарлаа:", error);
+        }
+      }
+    }
+  }, []);
+
+  const logout = async (e) => {
+    e.preventDefault()
+    try{
+      await axios.post(apiData.api_url + '/api/v1/auth/logout', {withCredentials : true})
+      localStorage.removeItem('token')
+      toast.success("Амжилттай гарлаа!");
+      router.push('/')
+    }catch(err){
+      toast.error("Гарах үед алдаа гарлаа!");
+      console.log(err)
+    }
+  }
+
   return (
     <div className="flex flex-col ">
       <div className="w-full flex justify-between">
@@ -101,18 +136,31 @@ const MainHeader = () => {
             className="w-full  px-3 py-3 text-lg sm:text-xl  border-gray-300 focus:outline-none"
           />
         </div>
-
-        <div className=" gap-10 lg:flex hidden  cursor-pointer">
-          <div className="flex gap-2" onClick={() => setIsModalOpen(true)}>
-            <LuUser className="text-[#008ECC]" size={25} />
-            <h2 className="text-nowrap">Sign Up/Sign In</h2>
-          </div>
-          {/* <div className="flex gap-2">
+        {!userData ? (
+          <div className=" gap-10 lg:flex hidden  cursor-pointer">
+            <div className="flex gap-2" onClick={() => setIsModalOpen(true)}>
+              <LuUser className="text-[#008ECC]" size={25} />
+              <h2 className="text-nowrap">Sign Up/Sign In</h2>
+            </div>
+            {/* <div className="flex gap-2">
             {" "}
             <LuShoppingCart className="text-[#008ECC]" size={25} />
             <h2>Cart</h2>
           </div> */}
-        </div>
+            {/* <h2 onClick={() => router.push('user-ifno')}>Profile</h2> */}
+          </div>
+        ) : (
+          <div className=" gap-10 lg:flex hidden  cursor-pointer">
+            <div className="flex gap-2"onClick={() => router.push("user-ifno")}>
+              <LuUser className="text-[#008ECC]" size={25} />
+              <h2 >Profile</h2>
+            </div>
+            <div className="flex gap-2" onClick={logout}>
+              <LogOut className="text-[#008ECC]" size={25} />
+              <h2 >гарах</h2>
+            </div>
+          </div>
+        )}
       </div>
       <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>

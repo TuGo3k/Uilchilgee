@@ -64,7 +64,7 @@ export default function Header() {
               </button>
 
               {/* Dropdown */}
-              {hoveredMenu === el.title && el.items.length > 0 && (
+              {hoveredMenu === el.title && el.length > 0 && (
                 <div className="absolute top-full left-0 shadow-md p-2 w-auto bg-white z-10">
                   {el.items.map((item, i) => (
                     <Link key={i} href={item.link}>
