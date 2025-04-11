@@ -46,7 +46,7 @@ const TotalServices = () => {
         getRequest({route: '/product?type=normal', setValue: setDatas, setIsLoading: setIsLoading})
       }
     }, [isLoading])
-    console.log("total", datas)
+
 
   // const nextSlide = () => {
   //   setPage((prev) => (prev + 1) % datas.length);
